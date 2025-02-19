@@ -1,0 +1,13 @@
+<div class="container">
+    <form [formGroup] = "formGroup">
+        <div class="p-1">
+            <label for="userId">User Id</label>
+            <input type="text" fromControlName="userId" class="form-control">
+        </div>
+        <div class="p-1">
+            <label for="bookId">Book Id</label>
+            <input type="text" fromControlName="bookId" class="form-control">
+        </div>
+        <button class="btn btn-primary" (click)="submit()"> Create </button>
+    </form>
+</div>

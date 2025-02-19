@@ -1,0 +1,106 @@
+<div class="">
+    <div class="row g-1 m-auto justify-content-center p-5 bg-dark my-2 rounded-3">
+        <div class="col-md-12 mb-2">
+            <input type="text" class="form-control" placeholder="Search for a book">
+        </div>
+        <div ngbAccordion>
+            <div ngbAccordionItem [collapsed]="isClosedAdvancedSearch" (show)="openAdvancedSearch()"
+                (hide)="closeAdvancedSearch()">
+                <h2 ngbAccordionHeader>
+                    <button ngbAccordionButton>Advanced Search</button>
+                </h2>
+                <div ngbAccordionCollapse>
+                    <div ngbAccordionBody>
+                        <ng-template>
+                            <p class="fw-semibold py-1">Search Fields</p>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label for="author" class="form-label">Type</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select">
+                                        <option value="all">All</option>
+                                        <option value="soba">Soba</option>
+                                        <option value="all">All</option>
+                                        <option value="all">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-6">
+                                    <label for="author" class="form-label">Author</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-6">
+                                    <label for="author" class="form-label">Publisher</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-6">
+                                    <label for="author" class="form-label">Publication Year</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-6">
+                                    <label for="author" class="form-label">Genre</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select">
+                                        <option value="all">All</option>
+                                        <option value="all">All</option>
+                                        <option value="all">All</option>
+                                        <option value="all">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2 align-items-center">
+                                <div class="col-md-6">
+                                    <label for="author" class="form-label">Category</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select">
+                                        <option value="all">All</option>
+                                        <option value="all">All</option>
+                                        <option value="all">All</option>
+                                        <option value="all">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 my-2">
+            <button class="btn btn-primary w-100" (click)="searchBooks()">Search</button>
+        </div>
+    </div>
+    @if(books){
+    @if(books.length > 0){
+    <div class="row g-1 gap-1">
+        @for (book of books; track book.id) {
+        <div class="col-md-3">
+            <app-book-card-search [book]="book"></app-book-card-search>
+        </div>
+        }
+    </div>
+    }
+    @else{
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="text-center">No books found</h5>
+        </div>
+    </div>
+    }
+    }
+</div>

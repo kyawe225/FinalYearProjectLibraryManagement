@@ -1,0 +1,47 @@
+<div class="card rounded-3 my-1">
+    <div class="card-body">
+        <h3 class="py-2 text-center">
+            Vision
+        </h3>
+        <div class="py-1 text-wrap lh-base">
+            To be a leading academic hub that fosters innovation, research, and lifelong learning by providing seamless
+            access to knowledge, cutting-edge resources, and a collaborative learning environment.
+        </div>
+        <h3 class="mt-1 py-2 text-center">
+            Mission
+        </h3>
+        <div class="py-1 text-wrap lh-base">
+            Our mission is to support the academic and research needs of students, faculty, and scholars by offering a
+            diverse collection of digital and physical resources. We are committed to promoting intellectual curiosity,
+            enhancing information literacy, and providing state-of-the-art facilities that empower the university
+            community to excel in education, research, and beyond.
+        </div>
+    </div>
+</div>
+
+<div class="card rounded-3 m-1">
+    @if(successMessage != ""){
+        <div class="alert" [className]="error ? 'alert-danger' : 'alert-success'" >{{successMessage}}</div>
+    }
+    <div class="card-body">
+        <p class="text-center h3">Feedback</p>
+        <p class="text-center h4">If you have something to feedback please fill and feedback us.</p>
+        <form [formGroup]="form">
+            <div class="p-1">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" formControlName="name" />
+            </div>
+            <div class="p-1">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" formControlName="email" />
+            </div>
+            <div class="p-1">
+                <label class="form-label">Feedback</label>
+                <textarea type="text" class="form-control" style="resize:none;" formControlName="feedback"></textarea>
+            </div>
+            <div class="p-1">
+                <button class="btn btn-primary w-100" (click)="save()">Send Feedback</button>
+            </div>
+        </form>
+    </div>
+</div>

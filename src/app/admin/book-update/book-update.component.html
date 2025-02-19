@@ -1,0 +1,143 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="title">Title</label>
+        <input id="title" formControlName="title" type="text" required>
+        @if(formGroup.get('title')?.invalid && formGroup.get('title')?.touched){
+        <div>
+            Title is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="authors">Authors</label>
+        <input id="authors" formControlName="authors" type="text" required>
+        @if(formGroup.get('authors')?.invalid && formGroup.get('authors')?.touched){
+        <div>
+            Authors are required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="isbn">ISBN</label>
+        <input id="isbn" formControlName="isbn" type="text" required>
+        @if(formGroup.get('isbn')?.invalid && formGroup.get('isbn')?.touched){
+        <div>
+            ISBN is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="publisher">Publisher</label>
+        <input id="publisher" formControlName="publisher" type="text" required>
+        @if(formGroup.get('publisher')?.invalid && formGroup.get('publisher')?.touched){
+        <div>
+            Publisher is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="publicationYear">Publication Year</label>
+        <input id="publicationYear" formControlName="publicationYear" type="number" required>
+        @if(formGroup.get('publicationYear')?.invalid && formGroup.get('publicationYear')?.touched){
+        <div>
+            Valid publication year is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="genre">Genre</label>
+        <input id="genre" formControlName="genre" type="text" required>
+        @if(formGroup.get('genre')?.invalid && formGroup.get('genre')?.touched){
+        <div>
+            Genre is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="language">Language</label>
+        <input id="language" formControlName="language" type="text" required>
+        @if(formGroup.get('language')?.invalid && formGroup.get('language')?.touched){
+        <div>
+            Language is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="pageCount">Page Count</label>
+        <input id="pageCount" formControlName="pageCount" type="number" required>
+        @if(formGroup.get('pageCount')?.invalid && formGroup.get('pageCount')?.touched){
+        <div>
+            Page count must be a positive number.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="coverImage">Cover Image URL</label>
+        <input id="coverImage" formControlName="coverImage" type="text" required>
+        @if(formGroup.get('coverImage')?.invalid && formGroup.get('coverImage')?.touched){
+        <div>
+            Cover image URL is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" required></textarea>
+        @if(formGroup.get('description')?.invalid && formGroup.get('description')?.touched){
+        <div>
+            Description is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="status">Status</label>
+        <input id="status" formControlName="status" type="text" required>
+        @if(formGroup.get('status')?.invalid && formGroup.get('status')?.touched){
+        <div>
+            Status is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="category">Category</label>
+        <input id="category" formControlName="category" type="text" required>
+        @if(formGroup.get('category')?.invalid && formGroup.get('category')?.touched){
+        <div>
+            Category is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="edition">Edition</label>
+        <input id="edition" formControlName="edition" type="text" required>
+        @if(formGroup.get('edition')?.invalid && formGroup.get('edition')?.touched){
+        <div>
+            Edition is required.
+        </div>
+        }
+    </div>
+
+    <div>
+        <label for="format">Format</label>
+        <input id="format" formControlName="format" type="text" required>
+        @if(formGroup.get('format')?.invalid && formGroup.get('format')?.touched){
+        <div>
+            Format is required.
+        </div>
+        }
+    </div>
+
+    <button type="submit" [disabled]="formGroup.invalid">Submit</button>
+</form>

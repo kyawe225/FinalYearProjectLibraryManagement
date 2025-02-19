@@ -1,0 +1,42 @@
+<div class="">
+    <div class="card rounded-3 mt-1 mb-2">
+        <div class="card-body">
+            <div class="d-flex flex-grow-1 justify-content-between align-items-center ">
+                <div class="lh-lg">
+                    <h2 class="lh-lg">Welcome From Library!</h2>
+                    <h4 class="lh-lg p-2 text-wrap">
+                        Your gateway to books, learning, and community. Explore, discover, and grow!
+                    </h4>
+                </div>
+                <div>
+                    <img src="/img/1lej9cck 1.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-1 align-items-center">
+        <h2 class="m-2 col-md-8">News</h2>
+        <div class="col-md-3 ms-auto text-end"><img src="/img/arrow_forward.png"></div>
+    </div>
+    <hr class="m-2" />
+    <!-- news section -->
+    <div class="card card-body rounded-3">
+        @for(i of news(); track i){ 
+            <div class="row g-2 m-2">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-img my-1">
+                            <img src="https://placehold.co/200" width="300" height="300" class="object-fit-fill mx-auto d-block" >
+                        </div>
+                        <div class="card-body">
+                            <div class="btn rounded-pill border border-1 border-primary pe-none">{{i.type}}</div>
+                            <h3>{{i.title}}</h3>
+                            <p>{{i.content.substr(0,100)}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+    </div>
+<!-- end news section -->
+

@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="https://placeholder.pics/svg/150" alt="Profile" class=" m-1" style="width: 65px; height: 44px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-auto px-2">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/book/search">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/news/list">News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact-us">About Us</a>
+                </li>
+            </ul>
+            <div class="dropdown" ngbDropdown>
+                <button class="btn btn-secondary dropdown-toggle" ngbDropdownToggle type="button"
+                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="https://placeholder.pics/svg/150" alt="Profile" class="rounded-3 m-1"
+                        style="width: 30px; height: 30px;">
+                    Kyaw Zin Htet
+                </button>
+                <div ngbDropdownMenu class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                    <a ngbDropdownItem class="dropdown-item py-1" href="#">Profile</a>
+                    <a ngbDropdownItem class="dropdown-item py-1" href="#">Favourite</a>
+                    <a ngbDropdownItem class="dropdown-item py-1" href="#">Reserved Items</a>
+                    <a ngbDropdownItem class="dropdown-item py-1" href="#">Borrowed Items</a>
+                    <a ngbDropdownItem class="dropdown-item py-1" href="#">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a ngbDropdownItem class="dropdown-item py-1" (click)="logout()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
+
+<footer class="d-flex flex-wrap p-2 border-top align-items-center bg-light mt-2">
+    <div class="col-lg-4 col-12">
+        <h4>Library Management System</h4>
+    </div>
+    <div class="col-lg-5">
+        <p>Library Management System Provided By Kyawe</p>
+    </div>
+    <div class="col-lg-3">
+        <p>2022 all rights receieved.</p>
+    </div>
+</footer>

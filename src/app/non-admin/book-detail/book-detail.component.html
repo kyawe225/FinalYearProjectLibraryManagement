@@ -1,0 +1,71 @@
+<div>
+    <div class="card my-2">
+        <div class="card-body">
+            <div class="row mx-2">
+                <div class="col-md-2">
+                    <img src="https://picsum.photos/seed/picsum/200/300" class="m-auto d-block img-fluid col-7"
+                        alt="Book Cover" />
+                </div>
+                <div class="col-md-9 ms-auto">
+                    <h3>{{book?.title}}</h3>
+                    <div class="row row-cols-2 lh-lg">
+                        <div class="col-md-4">Edition : </div>
+                        <div class="">{{book?.edition}}</div>
+                        <div class="col-md-4">Author : </div>
+                        <div class="">{{book?.authors}}</div>
+                        <div class="col-md-4">ISBN : </div>
+                        <div class="">{{book?.isbn}}</div>
+                        <div class="col-md-4">Language : </div>
+                        <div class="">{{book?.language}}</div>
+                        @if(isLoggedIn){
+                            <div class="row gap-2 col-10">
+                                <button class="btn btn-primary col-5" (click)="addToWishBook(book?.id !!)">WishBook</button>
+                                <button class="btn btn-primary col-5" (click)="borrowBook(book?.id!!)">Borrow</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card my-2">
+        <div class="card-body">
+            <h4>Details</h4>
+            <div class="row row-cols-2">
+                <div class="col-12">
+                    <div class="fs-6 fw-semibold">Description</div>
+                    <p class="fs-6">{{book?.description}}</p>
+                </div>
+                <div class="fs-6 fw-semibold">Publisher</div>
+                <p class="fs-6">{{book?.publisher}}</p>
+
+                <div class="fs-6 fw-semibold">Publication Year</div>
+                <p class="fs-6">{{book?.publicationYear}}</p>
+
+
+                <div class="fs-6 fw-semibold">Genre</div>
+                <p class="fs-6">{{book?.genre}}</p>
+
+
+                <div class="fs-6 fw-semibold">Page Count</div>
+                <p class="fs-6">{{book?.pageCount}}</p>
+
+
+                <div class="fs-6 fw-semibold">Edition</div>
+                <p class="fs-6">{{book?.edition}}</p>
+
+
+                <div class="fs-6 fw-semibold">Format</div>
+                <p class="fs-6">{{book?.format}}</p>
+
+
+                <div class="fs-6 fw-semibold">Arrived Date</div>
+                <p class="fs-6">{{book?.dateAdded}}</p>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
