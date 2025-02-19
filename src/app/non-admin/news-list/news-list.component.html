@@ -1,0 +1,7 @@
+<div class="h3 py-2"> News </div>
+<div class="row gy-2 py-2 gap-0 g-0" >
+    
+    @for(i of news(); track i){
+        <app-news-card [news]="i"></app-news-card>
+    }
+</div>

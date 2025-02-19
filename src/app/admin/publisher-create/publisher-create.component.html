@@ -1,0 +1,35 @@
+<form [formGroup]="formGroup">
+    <div class="p-1">
+        <label>
+            Name
+        </label>
+        <input type="text" class="form-control" formControlName="name" />
+    </div>
+    <div class="p-1">
+        <label>
+            Email
+        </label>
+        <input type="text" class="form-control" formControlName="email" />
+    </div>
+    <div class="p-1">
+        <label>
+            Phone Number
+        </label>
+        <input type="text" class="form-control" formControlName="phoneNumber" />
+    </div>
+    <div class="p-1">
+        <label>
+            Address
+        </label>
+        <textarea formControlName="address" class="form-control"></textarea>
+    </div>
+    <div class="p-1">
+        <label>
+            Description
+        </label>
+        <textarea formControlName="description" class="form-control"></textarea>
+    </div>
+    <div class="p-1">
+        <button class="btn btn-primary" (click)="submit()">Submit</button>
+    </div>
+</form>

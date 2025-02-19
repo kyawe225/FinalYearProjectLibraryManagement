@@ -1,0 +1,27 @@
+<div class="col-8 d-flex position-absolute top-50 start-50 translate-middle m-auto justify-content-center align-items-center card">
+    <form class="w-100 m-1 p-1" [formGroup]="formGroup">
+        <div class="card-body">
+            <img src="https://picsum.photos/50/300" alt="logo" class="m-auto d-block w-50 mb-2" height="115">
+            <h1 class="text-center">Register</h1>
+            <div class="p-1">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" formControlName="email">
+            </div>
+            <div class="p-1">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" formControlName="name">
+            </div>
+            <div class="p-1">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" formControlName="password">
+            </div>
+            <div class="p-1">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword">
+            </div>
+            <div class="p-1 ">
+                <button type="button" class="btn btn-primary w-100" (click)="submit()">Login</button>
+            </div>
+        </div>
+    </form>
+</div>
