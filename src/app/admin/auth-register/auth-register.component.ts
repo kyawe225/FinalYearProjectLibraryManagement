@@ -36,7 +36,7 @@ export class AuthRegisterComponent {
         confirmPassword: this.formGroup.controls['confirmPassword'].value,
         name: this.formGroup.controls['name'].value,
       }
-      let sub = this.authService.register(model).subscribe({
+      this.authService.register(model).subscribe({
         next : (value)=> {
           console.log(value);
           this.messageService.updateData("Register Successfully"); 
@@ -45,7 +45,6 @@ export class AuthRegisterComponent {
           console.log(error);
         },
         complete:()=>{
-          sub.unsubscribe();
           this.router.navigateByUrl("/auth/login");
         }
       })

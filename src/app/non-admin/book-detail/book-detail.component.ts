@@ -17,6 +17,27 @@ export class BookDetailComponent implements OnInit {
 
   book: Book | undefined;
 
+  bookSample = {
+    title: "Sample Book Title",
+    authors: "Author Name",
+    isbn: "123-4567890123",
+    publisher: "Sample Publisher",
+    publicationYear: 2025,
+    genre: "Fiction",
+    language: "English",
+    pageCount: 350,
+    coverImage: "https://example.com/cover.jpg",
+    description: "This is a sample description of the book.",
+    status: "Available",
+    category: "Novel",
+    edition: "1st Edition",
+    format: "Hardcover",
+    dateAdded: new Date("2025-01-06T00:00:00Z"),
+    createdAt: new Date("2025-01-06T00:00:00Z"),
+    updatedAt: new Date("2025-01-06T00:00:00Z"),
+    id: "unique-book-id-12345"
+  };
+
   constructor(private route: ActivatedRoute, private authService: AuthService, private bookService: BookService, private wishBookService : WishbookService) {
     this.bookId = this.route.snapshot.params['id'];
   }

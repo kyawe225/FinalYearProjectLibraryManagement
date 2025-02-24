@@ -26,12 +26,12 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-img my-1">
-                            <img src="https://placehold.co/200" width="300" height="300" class="object-fit-fill mx-auto d-block" >
+                            <img [src]="'data:image/jpeg;base64,'+ i.coverPic" width="300" height="300" class="object-fit-fill mx-auto d-block" >
                         </div>
                         <div class="card-body">
                             <div class="btn rounded-pill border border-1 border-primary pe-none">{{i.type}}</div>
                             <h3>{{i.title}}</h3>
-                            <p>{{i.content.substr(0,100)}}</p>
+                            <p>{{i.introParagraph}}</p>
                         </div>
                     </div>
                 </div>

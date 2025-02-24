@@ -6,6 +6,8 @@ export interface News {
     userId : string;
     id: string;
     type: string;
+    coverPic : string;
+    introParagraph:string;
 }
 
 export interface NewsCreate{

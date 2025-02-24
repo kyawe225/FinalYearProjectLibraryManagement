@@ -13,7 +13,7 @@ export class AuthService {
   private httpClient: HttpClient;
 
   private token = new BehaviorSubject<string>("");
-  currentData = this.token.asObservable();
+  currentData = this.token;
 
   isAuthenticated = new BehaviorSubject<boolean>(false);
 
@@ -24,6 +24,7 @@ export class AuthService {
     this.httpClient = http;
     this.updateToken(localStorage.getItem("token") || "");
     this.updateExpireTime(new Date(localStorage.getItem("expireTime") || ""));
+    this.isAuthenticated.next(this.token.value != "" && this.token.value != null);
   }
 
   register(model : Register){

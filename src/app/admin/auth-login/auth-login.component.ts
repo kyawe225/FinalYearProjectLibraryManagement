@@ -34,7 +34,7 @@ export class AuthLoginComponent {
         email: this.formGroup.controls['email'].value,
         password: this.formGroup.controls['password'].value,
       }
-      let sub = this.authService.login(model).subscribe({
+      this.authService.login(model).subscribe({
         next : (value)=> {
           console.log(value);
           this.authService.updateToken(value.data.token);
@@ -45,7 +45,7 @@ export class AuthLoginComponent {
           console.log(error);
         },
         complete:()=>{
-          sub.unsubscribe();
+          // sub.unsubscribe();
           this.router.navigateByUrl("/admin/book/list");
         }
       })

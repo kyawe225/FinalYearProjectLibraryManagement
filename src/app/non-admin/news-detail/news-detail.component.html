@@ -1,9 +1,20 @@
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1>{{news?.title}}</h1>
+<div class="card rounded-3">
+    <div class="row card-body">
+        <div class="col-12 p-1 mx-2">
+            <h1 class="my-4 py-1">{{news?.title}}</h1>
             <p #content></p>
-            <p>{{news?.createdAt?.toString()}}</p>
+            <div class="d-flex mx-2">
+                <table class="text-right my-2 ms-auto">
+                    <tr>
+                        <th class="text-start">Created Author</th>
+                        <td class="text-end">{{"kyawe"}}</td>
+                    </tr>
+                    <tr>
+                        <th class="text-start">Created At</th>
+                        <td class="text-end">{{news?.createdAt?.toString()}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
