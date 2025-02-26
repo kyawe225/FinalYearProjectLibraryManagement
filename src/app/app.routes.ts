@@ -23,8 +23,9 @@ import { BookSearchComponent } from './non-admin/book-search/book-search.compone
 import { BookDetailComponent } from './non-admin/book-detail/book-detail.component';
 import { NewsListComponent } from './non-admin/news-list/news-list.component';
 import { NewsDetailComponent } from './non-admin/news-detail/news-detail.component';
-import { WishBooksComponent } from './non-admin/wish-books/wish-books.component';
+import { WishBooksComponent } from './non-admin-loggedin/wish-books/wish-books.component';
 import { ContactUsComponent } from './non-admin/contact-us/contact-us.component';
+import { ProfileComponent } from './non-admin-loggedin/profile/profile.component';
 
 export const routes: Routes = [
     {
@@ -106,7 +107,7 @@ export const routes: Routes = [
                 component: BookSearchComponent
             },
             {
-                path:"book/:id",
+                path:"book/detail/:id",
                 component: BookDetailComponent
             },
             {
@@ -124,6 +125,14 @@ export const routes: Routes = [
             {
                 path: "contact-us",
                 component: ContactUsComponent
+            },
+            {
+                path: "user/profile",
+                component: ProfileComponent
+            },
+            {
+                path: "user/wishbook",
+                component: WishBooksComponent
             }
         ]
     },

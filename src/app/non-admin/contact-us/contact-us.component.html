@@ -29,15 +29,26 @@
         <form [formGroup]="form">
             <div class="p-1">
                 <label class="form-label">Email</label>
-                <input type="text" class="form-control" formControlName="name" />
+                <input type="text" class="form-control" formControlName="email" />
+                @if(form.get('email')?.hasError('required') && form.get('email')?.touched){
+                    <div class="text-danger h6">Email is required</div>
+                } @else if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
+                    <div class="text-danger h6">Email is invalid</div>
+                }
             </div>
             <div class="p-1">
                 <label class="form-label">Name</label>
-                <input type="text" class="form-control" formControlName="email" />
+                <input type="text" class="form-control" formControlName="name" />
+                @if(form.get('name')?.hasError('required') && form.get('name')?.touched){
+                    <div class="text-danger h6">Name is required</div>
+                }
             </div>
             <div class="p-1">
                 <label class="form-label">Feedback</label>
                 <textarea type="text" class="form-control" style="resize:none;" formControlName="feedback"></textarea>
+                @if(form.get('feedback')?.hasError('required') && form.get('feedback')?.touched){
+                    <div class="text-danger h6">Feedback is required</div>
+                }
             </div>
             <div class="p-1">
                 <button class="btn btn-primary w-100" (click)="save()">Send Feedback</button>

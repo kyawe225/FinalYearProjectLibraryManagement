@@ -18,9 +18,9 @@ export class ContactUsComponent {
 
   constructor(formBuilder : FormBuilder , private service : FeedbackService){
     this.form = formBuilder.group({
-      name: formBuilder.control("", Validators.required),
+      name: formBuilder.control("", [Validators.required]),
       email: formBuilder.control("",[Validators.required,Validators.email]),
-      feedback : formBuilder.control("",Validators.required)
+      feedback : formBuilder.control("",[Validators.required])
     });
   }
 
@@ -40,6 +40,7 @@ export class ContactUsComponent {
             this.error = false;
           }, 3000);
           this.form.patchValue({name : "", email : "", feedback : ""});
+          this.form.markAsUntouched();
         },
         error: (err : any) => {
           this.successMessage = "something wrong";

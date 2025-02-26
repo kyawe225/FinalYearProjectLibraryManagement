@@ -1,8 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { WishBook } from '../../model/wish-book';
-import { BookDetailComponent } from '../book-detail/book-detail.component';
-import { BookCardSearchComponent } from '../book-card-search/book-card-search.component';
 import { WishbookService } from '../../service/wishbook.service';
+import { BookCardSearchComponent } from '../../non-admin/book-card-search/book-card-search.component';
 
 @Component({
   selector: 'app-wish-books',
