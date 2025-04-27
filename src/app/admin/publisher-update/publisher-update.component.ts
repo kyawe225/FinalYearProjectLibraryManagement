@@ -36,14 +36,14 @@ export class PublisherUpdateComponent {
       let model : PublisherCreate = {
         name: this.formGroup.controls['name'].value,
         description: this.formGroup.controls['description'].value,
-        phoneNumber: this.formGroup.controls['phoneNumber'].value,
+        phone_number: this.formGroup.controls['phoneNumber'].value,
         email: this.formGroup.controls['email'].value,
         address: this.formGroup.controls['address'].value,
       }
       let sub = this.publisherService.update(this.id,model).subscribe({
         next : (value)=> {
           console.log(value);
-          this.messageService.updateData("Publisher Updated Successfully"); 
+          this.messageService.updateData("Publisher Updated Successfully");
         },
         error: (error)=>{
           console.log(error);

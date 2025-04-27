@@ -10,17 +10,15 @@
                     <h3>{{book?.title}}</h3>
                     <div class="row row-cols-2 lh-lg">
                         <div class="col-md-4">Edition : </div>
-                        <div class="">{{book?.edition}}</div>
+                        <div class="">{{book?.edition }}</div>
                         <div class="col-md-4">Author : </div>
-                        <div class="">{{book?.authors}}</div>
+                        <div class="">{{book?.author_names}}</div>
                         <div class="col-md-4">ISBN : </div>
                         <div class="">{{book?.isbn}}</div>
-                        <div class="col-md-4">Language : </div>
-                        <div class="">{{book?.language}}</div>
                         @if(isLoggedIn){
                             <div class="row gap-2 col-10">
-                                <button class="btn btn-primary col-5" (click)="addToWishBook(book?.id !!)">WishBook</button>
-                                <button class="btn btn-primary col-5" (click)="borrowBook(book?.id!!)">Appointment for borrow</button>
+                                <button class="btn btn-primary col-5" (click)="addToWishBook(book?.book_id !!)">WishBook</button>
+                                <button class="btn btn-primary col-5" (click)="borrowBook(book?.book_id!!)">Appointment for borrow</button>
                             </div>
                         }
                     </div>
@@ -38,34 +36,22 @@
                     <p class="fs-6">{{book?.description}}</p>
                 </div>
                 <div class="fs-6 fw-semibold">Publisher</div>
-                <p class="fs-6">{{book?.publisher}}</p>
+                <p class="fs-6">{{book?.publisher?.name }}</p>
 
                 <div class="fs-6 fw-semibold">Publication Year</div>
-                <p class="fs-6">{{book?.publicationYear}}</p>
+                <p class="fs-6">{{book?.publication_date?.getFullYear()}}</p>
 
 
                 <div class="fs-6 fw-semibold">Genre</div>
-                <p class="fs-6">{{book?.genre}}</p>
-
-
-                <div class="fs-6 fw-semibold">Page Count</div>
-                <p class="fs-6">{{book?.pageCount}}</p>
-
+                <p class="fs-6">{{book?.category?.name }}</p>
 
                 <div class="fs-6 fw-semibold">Edition</div>
-                <p class="fs-6">{{book?.edition}}</p>
-
-
-                <div class="fs-6 fw-semibold">Format</div>
-                <p class="fs-6">{{book?.format}}</p>
+                <p class="fs-6">{{book?.edition ?? "MM Ed" }}</p>
 
 
                 <div class="fs-6 fw-semibold">Arrived Date</div>
-                <p class="fs-6">{{book?.dateAdded}}</p>
-
+                <p class="fs-6">{{book?.added_date?.toLocaleDateString()}}</p>
             </div>
         </div>
     </div>
-
-
 </div>

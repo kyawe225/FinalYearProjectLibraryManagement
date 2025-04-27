@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { BookCreate } from '../model/book';
+import { Book, BookCreate } from '../model/book';
+import { ResponseModel } from '../model/response-model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,14 @@ export class BookService {
   }
 
   getDetail(id: string) {
-    return this.http.get(this.baseUrl + this.baseUri + "/"+ id);
+    return this.http.get<ResponseModel<Book>>(this.baseUrl + this.baseUri + "/"+ id);
   }
 
   create(model: BookCreate) {
     return this.http.post(this.baseUrl + this.baseUri, model);
   }
+
+  
 
   update(id: string, model: BookCreate) {
     return this.http.put(this.baseUrl + this.baseUri + "/" + id, model)

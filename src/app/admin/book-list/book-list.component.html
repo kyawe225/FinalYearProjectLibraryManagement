@@ -24,29 +24,29 @@
 		</tr>
 	</thead>
 	<tbody>
-		@for (item of datasource(); track item.id) {
+		@for (item of datasource(); track item.book_id) {
 			<tr>
-				<th scope="row">{{ item.id }}</th>
+				<th scope="row">{{ item.book_id }}</th>
 				<td>
 					{{item.title}}
 				</td>
                 <td>
-					{{item.authors}}
+					{{"Hello World"}}
 				</td>
                 <td>
 					{{item.isbn}}
 				</td>
-				<td>{{ item.publisher }}</td>
-				<td>{{ item.publicationYear }}</td>
-				<td>{{ item.genre }}</td>
-				<td>{{ item.language }}</td>
-				<td>{{ item.pageCount }}</td>
-				<td>{{ item.edition }}</td>
-				<td>{{ item.status }}</td>
-				<td>{{ item.category }}</td>
+				<td>{{ item.publisher.name }}</td>
+				<td>{{ item.publication_date?.getFullYear() }}</td>
+				<td>{{ item.category?.name }}</td>
+				<td>{{ "english" }}</td>
+				<td>{{ "20" }}</td>
+				<td>{{ "international edition" }}</td>
+				<td>{{ "something" }}</td>
+				<td>{{ "comedy" }}</td>
                 <td>
-                    <button class="btn btn-primary" (click)="clickUpdateTodo(item.id)">Update</button>
-                    <button class="btn btn-danger" (click)="clickDeleteTodo(item.id)">Delete</button>
+                    <button class="btn btn-primary" (click)="clickUpdateTodo(item.book_id)">Update</button>
+                    <button class="btn btn-danger" (click)="clickDeleteTodo(item.book_id)">Delete</button>
                 </td>
 			</tr>
 		}

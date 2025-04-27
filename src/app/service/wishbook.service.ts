@@ -29,6 +29,10 @@ export class WishbookService {
     return this.http.post(this.baseUrl + this.baseUri, model);
   }
 
+  wishCustomer(model: WishBookCreateViewModel) {
+    return this.http.post(this.baseUrl + this.baseUri + "/member/wish", model);
+  }
+
   update(id: string, model: WishBookCreateViewModel) {
     return this.http.put(this.baseUrl + this.baseUri + "/" + id, model)
   }

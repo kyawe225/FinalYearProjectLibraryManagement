@@ -21,17 +21,15 @@
     <hr class="m-2" />
     <!-- news section -->
     <div class="card card-body rounded-3">
-        @for(i of news(); track i){ 
+        @for(i of news(); track i){
             <div class="row g-2 m-2">
                 <div class="col-md-4">
                     <div class="card">
-                        <div class="card-img my-1">
-                            <img [src]="'data:image/jpeg;base64,'+ i.coverPic" width="300" height="300" class="object-fit-fill mx-auto d-block" >
-                        </div>
                         <div class="card-body">
-                            <div class="btn rounded-pill border border-1 border-primary pe-none">{{i.type}}</div>
+                            <div class="btn rounded-pill border border-1 border-primary pe-none">{{"News"}}</div>
                             <h3>{{i.title}}</h3>
-                            <p>{{i.introParagraph}}</p>
+                            <p class="h6 my-2 fw-semibold">{{i.publication_date.toDateString()}}</p>
+                            <p>{{i.content}}</p>
                         </div>
                     </div>
                 </div>

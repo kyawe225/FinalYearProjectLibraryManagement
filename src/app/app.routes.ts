@@ -26,6 +26,8 @@ import { NewsDetailComponent } from './non-admin/news-detail/news-detail.compone
 import { WishBooksComponent } from './non-admin-loggedin/wish-books/wish-books.component';
 import { ContactUsComponent } from './non-admin/contact-us/contact-us.component';
 import { ProfileComponent } from './non-admin-loggedin/profile/profile.component';
+import { ReservationListComponentComponent } from './reservation-list-component/reservation-list-component.component';
+import { ReservationListComponent } from './non-admin-loggedin/reservation-list/reservation-list.component';
 
 export const routes: Routes = [
     {
@@ -133,6 +135,10 @@ export const routes: Routes = [
             {
                 path: "user/wishbook",
                 component: WishBooksComponent
+            },
+            {
+                path: "user/reserve",
+                component: ReservationListComponent
             }
         ]
     },

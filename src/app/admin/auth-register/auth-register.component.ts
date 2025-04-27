@@ -33,13 +33,13 @@ export class AuthRegisterComponent {
       let model : Register = {
         email: this.formGroup.controls['email'].value,
         password: this.formGroup.controls['password'].value,
-        confirmPassword: this.formGroup.controls['confirmPassword'].value,
+        confirm_password: this.formGroup.controls['confirmPassword'].value,
         name: this.formGroup.controls['name'].value,
       }
       this.authService.register(model).subscribe({
         next : (value)=> {
           console.log(value);
-          this.messageService.updateData("Register Successfully"); 
+          this.messageService.updateData("Register Successfully");
         },
         error: (error)=>{
           console.log(error);

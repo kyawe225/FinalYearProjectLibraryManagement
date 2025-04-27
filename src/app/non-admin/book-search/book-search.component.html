@@ -88,7 +88,7 @@
     @if(books){
     @if(books.length > 0){
     <div class="row g-1 gap-1">
-        @for (book of books; track book.id) {
+        @for (book of books; track book.book_id) {
         <div class="col-md-3">
             <app-book-card-search [book]="book"></app-book-card-search>
         </div>

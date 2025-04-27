@@ -1,15 +1,11 @@
 <div class="col" (click)="goToNewsDetail(model()?.id || '')">
     <div class="card">
         <div class="card-body d-flex">
-            <div class="col-md-5 col-12">
-                <img [src]="'data:image/jpeg;base64,'+ model()?.coverPic"
-                    class="mx-auto d-block w-100 object-fit-contain object-position-center">
-            </div>
             <div class="col-md-7 col-12 px-md-3 mx-3">
                 <h3 class="py-2">{{model()?.title}}</h3>
-                <p>{{model()?.introParagraph}}</p>
+                <p>{{model()?.content}}</p>
                 <hr />
-                <div class="btn rounded-pill border border-1 border-primary pe-none">{{(model()?.type || 0) == 0 ? "News" : "Event"}}</div>
+                <div class="btn rounded-pill border border-1 border-primary pe-none">{{ "News" }}</div>
             </div>
         </div>
     </div>

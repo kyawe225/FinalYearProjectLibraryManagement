@@ -43,36 +43,36 @@ export class BookCreateComponent {
 
   onSubmit(){
     if(this.formGroup.valid){
-      let model : BookCreate = {
-        title: this.formGroup.controls['title'].value,
-        authors: this.formGroup.controls['authors'].value,
-        isbn: this.formGroup.controls['isbn'].value,
-        publisher: this.formGroup.controls['publisher'].value,
-        publicationYear: this.formGroup.controls['publicationYear'].value,
-        genre: this.formGroup.controls['genre'].value,
-        language: this.formGroup.controls['language'].value,
-        pageCount: this.formGroup.controls['pageCount'].value,
-        coverImage: this.formGroup.controls['coverImage'].value,
-        description: this.formGroup.controls['description'].value,
-        status: this.formGroup.controls['status'].value,
-        category: this.formGroup.controls['category'].value,
-        edition: this.formGroup.controls['edition'].value,
-        format: this.formGroup.controls['format'].value,
-        dateAdded: this.formGroup.controls['dateAdded'].value,
-      }
-      let sub = this.bookService.create(model).subscribe({
-        next : (value)=> {
-          console.log(value);
-          this.messageService.updateData("Book Created Successfully"); 
-        },
-        error: (error)=>{
-          console.log(error);
-        },
-        complete:()=>{
-          sub.unsubscribe();
-          this.router.navigateByUrl("/todo/list");
-        }
-      })
+      // let model : BookCreate = {
+      //   title: this.formGroup.controls['title'].value,
+      //   authors: this.formGroup.controls['authors'].value,
+      //   isbn: this.formGroup.controls['isbn'].value,
+      //   publisher: this.formGroup.controls['publisher'].value,
+      //   publicationYear: this.formGroup.controls['publicationYear'].value,
+      //   genre: this.formGroup.controls['genre'].value,
+      //   language: this.formGroup.controls['language'].value,
+      //   pageCount: this.formGroup.controls['pageCount'].value,
+      //   coverImage: this.formGroup.controls['coverImage'].value,
+      //   description: this.formGroup.controls['description'].value,
+      //   status: this.formGroup.controls['status'].value,
+      //   category: this.formGroup.controls['category'].value,
+      //   edition: this.formGroup.controls['edition'].value,
+      //   format: this.formGroup.controls['format'].value,
+      //   dateAdded: this.formGroup.controls['dateAdded'].value,
+      // }
+      // let sub = this.bookService.create(model).subscribe({
+      //   next : (value)=> {
+      //     console.log(value);
+      //     this.messageService.updateData("Book Created Successfully"); 
+      //   },
+      //   error: (error)=>{
+      //     console.log(error);
+      //   },
+      //   complete:()=>{
+      //     sub.unsubscribe();
+      //     this.router.navigateByUrl("/todo/list");
+      //   }
+      // })
     }
   }
 }

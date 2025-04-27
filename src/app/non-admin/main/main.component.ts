@@ -35,35 +35,9 @@ export class MainComponent implements OnInit, OnDestroy {
       next : (data: any) => {
         console.log(data);
         this.news.set(data.data);
-        this.news.set([
-          {
-            title: "Library Expands Digital Collection",
-            content: "Our library now offers thousands of new e-books and audiobooks for members.",
-            createdAt: new Date("2025-02-18T10:00:00Z"),
-            user: "JohnDoe",
-            userId: "user123",
-            id: "news001",
-            type: "announcement",
-            coverPic: this.base64string,
-            introParagraph: "Our library"
-          },
-        ])
       },
       error: (error:any)=>{
         console.log(error);
-        this.news.set([
-          {
-            title: "Library Expands Digital Collection",
-            content: "Our library now offers thousands of new e-books and audiobooks for members.",
-            createdAt: new Date("2025-02-18T10:00:00Z"),
-            user: "JohnDoe",
-            userId: "user123",
-            id: "news001",
-            type: "announcement",
-            coverPic: this.base64string,
-            introParagraph: "Our library"
-          },
-        ])
       },
       complete:()=>{
         console.log("complete")

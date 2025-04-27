@@ -4,13 +4,13 @@ export interface Latefee {
     loanDate: Date;
     lastReturnDate: Date;
     returnDate: Date | null;
-    Id : string;
-    updatedAt :Date;
-    createdAt :Date;
+    id : string;
+    updated_at :Date;
+    created_at :Date;
 }
 
 export interface LatefeeCreateViewModel{
-    loanTableId : string;
+    loan_table_id : string;
     amount: number;
     lateDays : number;
 }

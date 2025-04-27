@@ -1,39 +1,38 @@
+import { Publisher } from "./publisher";
+import {book_category} from './book_category';
+import {author} from './author';
+
 export interface Book {
-    title: string;
-    authors: string;
-    isbn: string;
-    publisher: string;
-    publicationYear: number;// finsihed
-    genre: string; 
-    language: string; // finished
-    pageCount: number;
-    coverImage: string;
-    description: string;
-    status: string;
-    category: string;
-    edition: string;
-    format: string;
-    dateAdded: Date;
-    createdAt: Date;
-    updatedAt: Date;
-    id : string;
+  added_date: Date;
+  author_names?: string | null;
+  authors: author[] | null;
+  available_copies: number;
+  book_id: string;
+  category: book_category | null;
+  category_id: string | null;
+  description: string | null;
+  edition: string | null;
+  isbn: string | null;
+  location_in_library: string | null;
+  publication_date: Date | null;
+  publisher: Publisher;
+  publisher_id: string | null;
+  status: string | null;
+  title: string;
+  total_copies: number;
 }
 
-
-export interface BookCreate{
+export interface BookCreate {
     title: string;
-    authors: string;
-    isbn: string;
-    publisher: string;
-    publicationYear: number;
-    genre: string;
-    language: string;
-    pageCount: number;
-    coverImage: string;
-    description: string;
-    status: string;
-    category: string;
+    isbn?: string;
+    publication_date?: Date; // DateOnly becomes string in TypeScript
+    publisher_id?: string;
+    category_id?: string;
+    total_copies: number;
+    available_copies: number;
+    location_in_library?: Date;
+    description : string;
     edition: string;
-    format: string;
-    dateAdded: Date;
+    added_date: Date; // DateOnly becomes string in TypeScript
+    status?: string;
 }

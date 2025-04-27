@@ -2,7 +2,7 @@ export interface Publisher {
     id: string;
     name: string;
     description: string;
-    phoneNumber: string;
+    phone_number: string;
     email: string;
     address: string;
     createdDate: Date;
@@ -13,7 +13,7 @@ export interface Publisher {
 export interface PublisherCreate{
     name: string;
     description: string;
-    phoneNumber: string;
+    phone_number: string;
     email: string;
     address: string;
 }
