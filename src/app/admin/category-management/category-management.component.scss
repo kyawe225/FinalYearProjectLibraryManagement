@@ -1,0 +1,52 @@
+/* src/app/admin/categories/category-management.component.scss */
+
+@use '@angular/material' as mat;
+@use '../../../../theme-colors' as theme-colors;
+
+.category-container {
+  padding: 20px;
+  
+  .header-card {
+    margin-bottom: 20px;
+    background-color: theme-colors.$card-background;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    mat-card-title {
+      color: theme-colors.$primary-color;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+    
+    mat-card-subtitle {
+      color: theme-colors.$text-medium;
+      margin-top: 4px;
+    }
+    
+    mat-card-actions {
+      padding: 0 16px 16px;
+    }
+  }
+  
+  .table-container {
+    background-color: theme-colors.$card-background;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  ::ng-deep {
+    .mat-column-category_name {
+      font-weight: 500;
+    }
+    
+    .mat-column-parent_category_name {
+      max-width: 150px;
+    }
+    
+    .mat-column-description {
+      max-width: 300px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

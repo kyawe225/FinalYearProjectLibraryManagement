@@ -1,0 +1,205 @@
+@use '../../../../theme-colors.scss' as theme-colors;
+
+.news-detail-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.back-nav {
+  margin-bottom: 24px;
+
+  button {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.loading-container, .not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+  
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+  
+  h2 {
+    color: theme-colors.$text-dark;
+    margin-bottom: 16px;
+  }
+  
+  p {
+    color: theme-colors.$text-medium;
+    margin-bottom: 24px;
+    max-width: 400px;
+  }
+}
+
+.news-article {
+  .metadata-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    background-color: theme-colors.$primary-lighter;
+    
+    &.importance-strong {
+      background-color: theme-colors.$tertiary-lighter;
+    }
+    
+    &.importance-normal {
+      background-color: theme-colors.$primary-lighter;
+    }
+    
+    &.importance-low {
+      background-color: theme-colors.$accent-lighter;
+    }
+    
+    .metadata-item {
+      display: flex;
+      align-items: center;
+      color: theme-colors.$text-dark;
+      font-size: 0.9rem;
+      
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        margin-right: 8px;
+      }
+    }
+  }
+  
+  .article-header {
+    margin-bottom: 32px;
+    
+    .article-title {
+      font-size: 2.2rem;
+      color: theme-colors.$text-dark;
+      margin: 0 0 16px 0;
+      line-height: 1.3;
+      font-weight: 500;
+    }
+    
+    .author-info {
+      display: flex;
+      align-items: center;
+      color: theme-colors.$text-medium;
+      font-size: 1rem;
+      
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+      }
+    }
+  }
+  
+  .article-content-wrapper {
+    margin-bottom: 32px;
+    
+    .hero-image {
+      margin-bottom: 24px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      
+      img {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+      }
+    }
+    
+    .article-content {
+      color: theme-colors.$text-dark;
+      line-height: 1.7;
+      font-size: 1.1rem;
+      
+      p {
+        margin-bottom: 20px;
+      }
+      
+      a {
+        color: theme-colors.$primary-color;
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      
+      ul, ol {
+        padding-left: 24px;
+        margin-bottom: 20px;
+      }
+    }
+  }
+  
+  .branch-info {
+    margin-bottom: 32px;
+    
+    mat-card {
+      border-left: 4px solid theme-colors.$primary-color;
+    }
+    
+    mat-icon {
+      color: theme-colors.$primary-color;
+    }
+    
+    mat-card-content {
+      padding-top: 16px;
+      
+      p {
+        margin-bottom: 8px;
+        color: theme-colors.$text-medium;
+      }
+      
+      strong {
+        color: theme-colors.$text-dark;
+      }
+    }
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .metadata-bar {
+    flex-direction: column;
+    gap: 12px !important;
+  }
+  
+  .article-header {
+    .article-title {
+      font-size: 1.8rem !important;
+    }
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+    }
+  }
+}

@@ -56,25 +56,29 @@ export interface StaffCreate {
 
 export interface Member {
     id: string;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     address?: string;
-    phoneNumber?: string;
+    phone_number?: string;
     email?: string;
-    dateOfBirth?: Date; // DateOnly becomes string in TypeScript
-    membershipDate: Date; // DateOnly becomes string in TypeScript
-    membershipExpiry?: Date; // DateOnly becomes string in TypeScript
+    date_of_birth?: Date| null; // DateOnly becomes string in TypeScript
+    membership_date: Date| null; // DateOnly becomes string in TypeScript
+    membership_expiry?: Date | null; // DateOnly becomes string in TypeScript
     password?: string;
-    membershipStatus: string;
+    membership_status: string;
 }
 
 export interface MemberCreate {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     address?: string;
-    phoneNumber?: string;
+    phone_number?: string;
     email?: string;
-    dateOfBirth?: string; // DateOnly becomes string in TypeScript
-    membershipDate: string; // DateOnly becomes string in TypeScript
+    date_of_birth?: Date|null; // DateOnly becomes string in TypeScript
+    membership_date: Date|null; // DateOnly becomes string in TypeScript
+    membership_expiry?: Date | null; // DateOnly becomes string in TypeScript
+    membership_status?: string;
     password?: string;
 }
+
+export type MemberAction = 'create' | 'edit' | 'view' | 'delete' | 'close';

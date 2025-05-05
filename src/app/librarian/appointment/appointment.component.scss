@@ -1,0 +1,36 @@
+@use '../../../../theme-colors' as theme-colors;
+
+.member-appointments-container {
+  padding: 1rem;
+  width: 100%;
+}
+
+.status-chip {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  display: inline-block;
+  min-width: 80px;
+
+  &.scheduled {
+    background-color: rgba(theme-colors.$primary-lighter, 0.3);
+    color: theme-colors.$primary-color;
+  }
+
+  &.completed {
+    background-color: rgba(theme-colors.$accent-lighter, 0.3);
+    color: theme-colors.$accent-darker;
+  }
+
+  &.cancelled {
+    background-color: rgba(theme-colors.$error-lighter, 0.3);
+    color: theme-colors.$error-color;
+  }
+
+  &.missed {
+    background-color: rgba(theme-colors.$tertiary-lighter, 0.3);
+    color: theme-colors.$tertiary-color;
+  }
+}

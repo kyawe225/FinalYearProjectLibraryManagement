@@ -1,0 +1,33 @@
+<!-- src/app/admin/categories/category-management.component.html -->
+
+<div class="category-container">
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Category Management</mat-card-title>
+        <mat-card-subtitle>Manage book categories and subcategories</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="handleAddClick()">
+          <mat-icon>add</mat-icon> Add Category
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [displayedColumns]="displayedColumns()"
+        [dataSource]="dataSource()"
+        [title]="'Categories'"
+        [showFilter]="true"
+        [showPaginator]="true"
+        [pageSize]="10"
+        [loading]="loading()"
+        [actionsColumn]="true"
+        [emptyStateMessage]="'No categories found'"
+        (rowClick)="handleRowClick($event)"
+        (editClick)="handleEditClick($event)"
+        (deleteClick)="handleDeleteClick($event)"
+        (refresh)="handleRefresh()">
+      </app-common-material-table>
+    </div>
+  </div>

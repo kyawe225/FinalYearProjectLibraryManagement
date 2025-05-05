@@ -1,0 +1,27 @@
+<!-- src/app/admin/authors/author-list/author-list.component.html -->
+<div class="author-list-container">
+    <div class="page-header">
+      <h1>Authors Management</h1>
+      <button mat-raised-button color="primary" (click)="onAddAuthor()">
+        <mat-icon>add</mat-icon>
+        Add Author
+      </button>
+    </div>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [title]="'Authors'"
+        [dataSource]="dataSource"
+        [displayedColumns]="displayedColumns"
+        [loading]="loading"
+        [actionsColumn]="true"
+        [showFilter]="true"
+        [showPaginator]="true"
+        emptyStateMessage="No authors found"
+        (rowClick)="onRowClick($event)"
+        (editClick)="onEditAuthor($event)"
+        (deleteClick)="onDeleteAuthor($event)"
+        (refresh)="onRefresh()">
+      </app-common-material-table>
+    </div>
+  </div>

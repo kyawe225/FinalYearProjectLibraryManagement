@@ -1,0 +1,122 @@
+<div class="table-container mat-elevation-z2">
+    <!-- Table Header -->
+    <div class="table-header">
+      <h2 class="table-title">{{ title() }}</h2>
+      <div class="table-actions">
+        <!-- Filter input -->
+        @if (showFilter()) {
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Filter</mat-label>
+            <input 
+              matInput 
+              id="table-filter-input"
+              [ngModel]="filterValue()"
+              (ngModelChange)="filterValue.set($event)"
+              placeholder="Search..."
+            >
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        }
+        
+        <!-- Refresh button -->
+        <button mat-icon-button color="primary" (click)="onRefresh()" matTooltip="Refresh data">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Progress bar for loading state -->
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" class="loading-bar"></mat-progress-bar>
+    }
+    
+    <!-- Material Table -->
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource()" matSort class="library-table">
+        
+        <!-- Checkbox Column -->
+        @if (selectable()) {
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="onSelectionChange(row)"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+        }
+        
+        <!-- Dynamic Columns based on displayedColumns input (skipping select and actions) -->
+        @for (column of displayColumns(); track column) {
+          @if (column !== 'select' && column !== 'actions') {
+            <ng-container [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ column | titlecase }}
+              </th>
+              <td mat-cell *matCellDef="let element" 
+                  [matTooltip]="getCellTooltip(element, column)"
+                  matTooltipPosition="above"
+                  matTooltipShowDelay="500">
+                {{ getPropertyByPath(element, column) }}
+              </td>
+            </ng-container>
+          }
+        }
+        
+        <!-- Actions Column -->
+        @if (actionsColumn()) {
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" (click)="onViewClick(element, $event)" matTooltip="View details">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button color="accent" (click)="onEditClick(element, $event)" matTooltip="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="onDeleteClick(element, $event)" matTooltip="Delete">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+        }
+        
+        <!-- Header and Row Definitions -->
+        <tr mat-header-row *matHeaderRowDef="displayColumns(); sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns();"
+            (click)="onRowClick(row)"
+            class="table-row"></tr>
+        
+        <!-- Row shown when there is no matching data -->
+        <tr class="empty-row" *matNoDataRow>
+          <td [attr.colspan]="displayColumns().length" class="empty-message">
+            <div class="empty-state">
+              <mat-icon>info</mat-icon>
+              @if (filterValue() && filterValue().length > 0) {
+                <span>No results matching "{{ filterValue() }}"</span>
+              } @else {
+                <span>{{ emptyStateMessage() }}</span>
+              }
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+    <!-- Paginator -->
+    @if (showPaginator()) {
+      <mat-paginator
+        [pageSizeOptions]="pageSizeOptions()"
+        [pageSize]="pageSize()"
+        showFirstLastButtons>
+      </mat-paginator>
+    }
+  </div>

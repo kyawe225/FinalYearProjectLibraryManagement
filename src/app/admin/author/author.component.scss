@@ -1,0 +1,30 @@
+/* src/app/admin/authors/author-list/author-list.component.scss */
+@use '../../../../theme-colors' as theme-colors;
+
+.author-list-container {
+  padding: 20px;
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+      color: theme-colors.$primary-color;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    button {
+      background-color: theme-colors.$primary-color;
+      color: white;
+    }
+  }
+
+  .table-container {
+    background-color: theme-colors.$card-background;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}

@@ -1,0 +1,17 @@
+<div class="admin-container">
+    <div class="admin-header">
+        <h1>Book Management</h1>
+        <button class="add-button" mat-raised-button color="primary" (click)="onAddBook()">
+            <mat-icon>add</mat-icon> Add New Book
+        </button>
+    </div>
+
+    <div class="table-container">
+        <app-common-material-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" title="Books"
+            [showFilter]="true" [showPaginator]="true" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 100]"
+            [actionsColumn]="true" [loading]="loading" emptyStateMessage="No books found"
+            (rowClick)="onViewBook($event)" (editClick)="onEditBook($event)" (deleteClick)="onDeleteBook($event)"
+            (viewClick)="onViewBook($event)" (refresh)="onRefresh()">
+        </app-common-material-table>
+    </div>
+</div>

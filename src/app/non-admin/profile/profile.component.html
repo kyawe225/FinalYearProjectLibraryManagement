@@ -1,0 +1,320 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">University Library</a>
+      <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Sidebar -->
+  <div class="sidebar" [ngClass]="{'sidebar-open': isSidebarOpen()}">
+    <a href="#" class="active"><i class="fas fa-user-circle"></i> My Profile</a>
+    <a href="#"><i class="fas fa-book"></i> Catalog</a>
+    <a href="#"><i class="fas fa-bookmark"></i> My Books</a>
+    <a href="#"><i class="fas fa-calendar-alt"></i> Appointments</a>
+    <a href="#"><i class="fas fa-calendar-check"></i> Events</a>
+    <a href="#"><i class="fas fa-desktop"></i> Computer Lab</a>
+    <a href="#"><i class="fas fa-bell"></i> Notifications</a>
+    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="main-content" [ngClass]="{'main-content-shifted': isSidebarOpen()}">
+    <!-- Profile Card -->
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+      <div class="profile-info">
+        <h2 class="profile-name">Kyaw Zin Htet</h2>
+        <p class="profile-role">Student • BSc Computing</p>
+        
+        <div class="profile-details">
+          <div class="profile-detail">
+            <span>Email</span>
+            <strong>{{"kyawe@gmail.com"}}</strong>
+          </div>
+          <div class="profile-detail">
+            <span>Student ID</span>
+            <strong>001430668</strong>
+          </div>
+          <div class="profile-detail">
+            <span>Membership Status</span>
+            <strong>Active</strong>
+          </div>
+          <div class="profile-detail">
+            <span>Membership Expiry</span>
+            <strong>March 27, 2026</strong>
+          </div>
+        </div>
+        
+        <div class="profile-actions mt-4">
+          <button class="btn btn-edit btn-sm me-2"><i class="fas fa-pen me-2"></i>Edit Profile</button>
+          <button class="btn btn-change-password btn-sm"><i class="fas fa-lock me-2"></i>Change Password</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Activity Statistics -->
+    <div class="row mb-4">
+      <div class="col-md-3 col-6 mb-3">
+        <div class="stats-card">
+          <div class="stats-icon books">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="stats-number">3</div>
+          <div class="stats-label">Books Borrowed</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 mb-3">
+        <div class="stats-card">
+          <div class="stats-icon reservations">
+            <i class="fas fa-bookmark"></i>
+          </div>
+          <div class="stats-number">2</div>
+          <div class="stats-label">Reservations</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 mb-3">
+        <div class="stats-card">
+          <div class="stats-icon fines">
+            <i class="fas fa-money-bill-wave"></i>
+          </div>
+          <div class="stats-number">$0.00</div>
+          <div class="stats-label">Fines</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 mb-3">
+        <div class="stats-card">
+          <div class="stats-icon events">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <div class="stats-number">1</div>
+          <div class="stats-label">Events</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tabs Navigation -->
+    <ul class="nav nav-tabs tab-navigation" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="books-tab" data-mdb-toggle="tab" data-mdb-target="#books" 
+          type="button" role="tab" aria-controls="books" aria-selected="true">
+          Borrowed Books
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="reservations-tab" data-mdb-toggle="tab" data-mdb-target="#reservations" 
+          type="button" role="tab" aria-controls="reservations" aria-selected="false">
+          Reservations
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="appointments-tab" data-mdb-toggle="tab" data-mdb-target="#appointments" 
+          type="button" role="tab" aria-controls="appointments" aria-selected="false">
+          Appointments
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="events-tab" data-mdb-toggle="tab" data-mdb-target="#events" 
+          type="button" role="tab" aria-controls="events" aria-selected="false">
+          Events
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="history-tab" data-mdb-toggle="tab" data-mdb-target="#history" 
+          type="button" role="tab" aria-controls="history" aria-selected="false">
+          History
+        </button>
+      </li>
+    </ul>
+    
+    <!-- Tab Content -->
+    <div class="tab-content" id="myTabContent">
+      <!-- Books Tab -->
+      <div class="tab-pane fade show active" id="books" role="tabpanel" aria-labelledby="books-tab">
+        <h3 class="section-title mb-4"><i class="fas fa-book"></i>Currently Borrowed Books</h3>
+        
+        <div class="book-card">
+          <div class="book-cover">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="book-details">
+            <h4 class="book-title">Learning JavaScript: A Modern Introduction to Programming</h4>
+            <p class="book-author">By Marijn Haverbeke</p>
+            <span class="book-status status-borrowed">Borrowed</span>
+            <p class="book-due">Due on: May 10, 2025</p>
+          </div>
+        </div>
+        
+        <div class="book-card">
+          <div class="book-cover">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="book-details">
+            <h4 class="book-title">Pro CSS and HTML Design Patterns</h4>
+            <p class="book-author">By Michael Bowers</p>
+            <span class="book-status status-borrowed">Borrowed</span>
+            <p class="book-due">Due on: May 15, 2025</p>
+          </div>
+        </div>
+        
+        <div class="book-card">
+          <div class="book-cover">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="book-details">
+            <h4 class="book-title">ASP.NET Web API 2: Building a REST Service from Start to Finish</h4>
+            <p class="book-author">By Jamie Kurtz</p>
+            <span class="book-status status-overdue">Overdue by 2 days</span>
+            <p class="book-due">Due on: April 25, 2025</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Reservations Tab -->
+      <div class="tab-pane fade" id="reservations" role="tabpanel" aria-labelledby="reservations-tab">
+        <h3 class="section-title mb-4"><i class="fas fa-bookmark"></i>Current Reservations</h3>
+        
+        <div class="book-card">
+          <div class="book-cover">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="book-details">
+            <h4 class="book-title">TypeScript Cookbook</h4>
+            <p class="book-author">By Stefan Baumgartner</p>
+            <span class="book-status status-reserved">Reserved</span>
+            <p class="book-due">Available for pickup: May 2, 2025</p>
+          </div>
+        </div>
+        
+        <div class="book-card">
+          <div class="book-cover">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="book-details">
+            <h4 class="book-title">Head First Design Patterns</h4>
+            <p class="book-author">By Eric Freeman, Elisabeth Robson</p>
+            <span class="book-status status-reserved">Reserved</span>
+            <p class="book-due">Available for pickup: May 5, 2025</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Appointments Tab -->
+      <div class="tab-pane fade" id="appointments" role="tabpanel" aria-labelledby="appointments-tab">
+        <h3 class="section-title mb-4"><i class="fas fa-calendar-alt"></i>Upcoming Appointments</h3>
+        
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Purpose</th>
+                <th>Staff</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>May 3, 2025</td>
+                <td>10:00 AM - 11:00 AM</td>
+                <td>Research Assistance</td>
+                <td>U Hla Kyaw</td>
+                <td><span class="badge badge-success">Confirmed</span></td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary">Reschedule</button>
+                  <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Events Tab -->
+      <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
+        <h3 class="section-title mb-4"><i class="fas fa-calendar-check"></i>Registered Events</h3>
+        
+        <div class="activity-card">
+          <h4 class="activity-title">Library Database Systems Workshop</h4>
+          <p class="activity-date">May 7, 2025 • 2:00 PM - 5:00 PM</p>
+          <p class="activity-details">
+            Learn about modern database systems used in library management. This hands-on workshop will cover PostgreSQL, MySQL, and MongoDB with practical examples.
+          </p>
+          <div class="mt-3">
+            <span class="badge badge-success">Registered</span>
+            <button class="btn btn-sm btn-outline-danger float-end">Cancel Registration</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- History Tab -->
+      <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+        <h3 class="section-title mb-4"><i class="fas fa-history"></i>Loan History</h3>
+        
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Book Title</th>
+                <th>Borrowed Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Programming C#</td>
+                <td>Feb 15, 2025</td>
+                <td>Mar 15, 2025</td>
+                <td><span class="badge badge-success">Returned</span></td>
+              </tr>
+              <tr>
+                <td>Systems Analysis and Design</td>
+                <td>Jan 10, 2025</td>
+                <td>Feb 10, 2025</td>
+                <td><span class="badge badge-success">Returned</span></td>
+              </tr>
+              <tr>
+                <td>Agile Project Management</td>
+                <td>Dec 05, 2024</td>
+                <td>Jan 05, 2025</td>
+                <td><span class="badge badge-success">Returned</span></td>
+              </tr>
+              <tr>
+                <td>The Principles of Object-Oriented JavaScript</td>
+                <td>Nov 20, 2024</td>
+                <td>Dec 02, 2024</td>
+                <td><span class="badge badge-warning">Returned Late</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Overlay for mobile sidebar -->
+  <div class="overlay" [ngClass]="{'overlay-active': isSidebarOpen}" (click)="toggleSidebar()"></div>

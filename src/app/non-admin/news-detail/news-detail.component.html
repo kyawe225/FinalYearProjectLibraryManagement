@@ -1,20 +1,80 @@
-<div class="card rounded-3">
-    <div class="row card-body">
-        <div class="col-12 p-1 mx-2">
-            <h1 class="my-4 py-1">{{news?.title}}</h1>
-            <p #content></p>
-            <div class="d-flex mx-2">
-                <table class="text-right my-2 ms-auto">
-                    <tr>
-                        <th class="text-start">Created Author</th>
-                        <td class="text-end">{{"kyawe"}}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-start">Published At</th>
-                        <td class="text-end">{{news?.publication_date?.toLocaleDateString()}}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+<div class="news-detail-container">
+    <div class="back-nav">
+      <button mat-button color="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Back to News
+      </button>
     </div>
-</div>
+  
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading article...</p>
+    </div>
+  
+    <div *ngIf="!loading && !newsItem" class="not-found">
+      <mat-icon color="warn">error</mat-icon>
+      <h2>News article not found</h2>
+      <p>The article you're looking for might have been removed or is no longer available.</p>
+      <button mat-raised-button color="primary" routerLink="/news">View All News</button>
+    </div>
+  
+    <div *ngIf="!loading && newsItem" class="news-article">
+      <div class="metadata-bar" [ngClass]="'importance-' + newsItem.importance_level.toLowerCase()">
+        <div class="metadata-item">
+          <mat-icon>calendar_today</mat-icon>
+          <span>Published: {{ newsItem.publication_date | date:'medium' }}</span>
+        </div>
+        <div class="metadata-item" *ngIf="newsItem.expiry_date">
+          <mat-icon>timer</mat-icon>
+          <span>Available until: {{ newsItem.expiry_date | date:'medium' }}</span>
+        </div>
+        <div class="metadata-item" *ngIf="newsItem.category">
+          <mat-icon>category</mat-icon>
+          <span>{{ newsItem.category }}</span>
+        </div>
+        <div class="metadata-item">
+          <mat-icon>stars</mat-icon>
+          <span>{{ newsItem.importance_level }} Importance</span>
+        </div>
+      </div>
+  
+      <div class="article-header">
+        <h1 class="article-title">{{ newsItem.title }}</h1>
+        <div class="author-info" *ngIf="staff">
+          <mat-icon>person</mat-icon>
+          <span>Published by: {{ staff.first_name }} {{ staff.last_name }}</span>
+        </div>
+      </div>
+  
+      <div class="article-content-wrapper">
+        <div class="hero-image" *ngIf="newsItem.image_url">
+          <img [src]="newsItem.image_url" [alt]="newsItem.title">
+        </div>
+  
+        <div class="article-content">
+          <p [innerHTML]="formattedContent"></p>
+        </div>
+      </div>
+  
+      <div class="branch-info" *ngIf="branch">
+        <mat-card>
+          <mat-card-header>
+            <mat-icon mat-card-avatar>location_on</mat-icon>
+            <mat-card-title>{{ branch.branch_name }}</mat-card-title>
+            <mat-card-subtitle>Branch Information</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p><strong>Address:</strong> {{ branch.address }}</p>
+            <p *ngIf="branch.phone"><strong>Phone:</strong> {{ branch.phone }}</p>
+            <p *ngIf="branch.email"><strong>Email:</strong> {{ branch.email }}</p>
+            <p *ngIf="branch.opening_hours"><strong>Opening Hours:</strong> {{ branch.opening_hours }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+  
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" routerLink="/news">View All News</button>
+        <button *ngIf="branch" mat-stroked-button color="accent" [routerLink]="['/branches', branch.id]">Visit Branch Page</button>
+      </div>
+    </div>
+  </div>

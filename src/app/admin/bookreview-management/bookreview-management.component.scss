@@ -1,0 +1,56 @@
+/* src/app/admin/book-reviews/book-review-management.component.scss */
+
+@use '@angular/material' as mat;
+@use '../../../../theme-colors' as theme-colors;
+
+.book-review-container {
+  padding: 20px;
+  
+  .header-card {
+    margin-bottom: 20px;
+    background-color: theme-colors.$card-background;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    mat-card-title {
+      color: theme-colors.$primary-color;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+    
+    mat-card-subtitle {
+      color: theme-colors.$text-medium;
+      margin-top: 4px;
+    }
+    
+    mat-card-actions {
+      padding: 0 16px 16px;
+    }
+  }
+  
+  .table-container {
+    background-color: theme-colors.$card-background;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .star-rating {
+    color: theme-colors.$accent-color;
+    display: flex;
+    align-items: center;
+    
+    .rating-value {
+      margin-left: 5px;
+      font-weight: 500;
+    }
+  }
+  
+  ::ng-deep {
+    .mat-column-rating {
+      max-width: 120px;
+    }
+    
+    .mat-column-review_date {
+      max-width: 120px;
+    }
+  }
+}

@@ -1,0 +1,137 @@
+<!-- src/app/admin/wishes/wish-management.component.html -->
+
+<div class="wish-container">
+    <div class="wish-stats-row">
+      <mat-card class="stats-card">
+        <div class="stats-icon">
+          <mat-icon>bookmark</mat-icon>
+        </div>
+        <div class="stats-content">
+          <div class="stats-label">Total Wishes</div>
+          <div class="stats-value">{{ totalWishes() }}</div>
+        </div>
+      </mat-card>
+  
+      <mat-card class="stats-card">
+        <div class="stats-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="stats-content">
+          <div class="stats-label">Active Members</div>
+          <div class="stats-value">{{ activeMembers() }}</div>
+        </div>
+      </mat-card>
+  
+      <mat-card class="popular-books-card">
+        <div class="card-header">
+          <mat-icon>trending_up</mat-icon>
+          <span>Popular Wished Books</span>
+        </div>
+        <div class="popular-books-list">
+          <div class="popular-book-item" *ngFor="let book of popularBooks().slice(0, 3); let i = index">
+            <span class="rank">{{ i + 1 }}</span>
+            <span class="book-title">{{ book.title }}</span>
+            <span class="wish-count">{{ book.count }} wishes</span>
+          </div>
+          <div class="no-data" *ngIf="popularBooks().length === 0">
+            No wish data available
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Wishbook Management</mat-card-title>
+        <mat-card-subtitle>Manage member book wishlists</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="filter-container">
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Member</mat-label>
+            <mat-select [value]="selectedMember()" (selectionChange)="selectedMember.set($event.value); onFilterChange()">
+              <mat-option value="">All Members</mat-option>
+              <mat-option *ngFor="let member of members()" [value]="member.id">
+                {{ member.first_name }} {{ member.last_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Date Range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate placeholder="Start date" 
+                     (dateChange)="updateDateRangeStart($event); onFilterChange()">
+              <input matEndDate placeholder="End date" 
+                     (dateChange)="updateDateRangeEnd($event); onFilterChange()">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            <button *ngIf="selectedDateRange().start || selectedDateRange().end" 
+                    matSuffix mat-icon-button aria-label="Clear" 
+                    (click)="clearDateFilter()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="handleAddClick()">
+          <mat-icon>add</mat-icon> Add Wish
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [displayedColumns]="displayedColumns()"
+        [dataSource]="dataSource()"
+        [title]="'Wishlist'"
+        [showFilter]="true"
+        [showPaginator]="true"
+        [pageSize]="10"
+        [loading]="loading()"
+        [actionsColumn]="true"
+        [emptyStateMessage]="'No wishes found for the selected filters'"
+        (rowClick)="handleRowClick($event)"
+        (editClick)="handleEditClick($event)"
+        (deleteClick)="handleDeleteClick($event)"
+        (refresh)="handleRefresh()">
+        
+        <!-- Custom column templates -->
+        <ng-template #book_statusColumnTemplate let-element>
+          <span [ngClass]="['status-chip', getStatusClass(element.book_status)]">
+            {{ element.book_status }}
+          </span>
+        </ng-template>
+        
+        <ng-template #notesColumnTemplate let-element>
+          <div class="notes-cell">
+            {{ element.notes || 'No notes provided' }}
+          </div>
+        </ng-template>
+        
+        <!-- Custom action column template -->
+        <ng-template #actionsColumnTemplate let-element>
+          <div class="actions-container">
+            <button mat-icon-button color="primary" (click)="handleEditClick(element); $event.stopPropagation()" 
+                    matTooltip="Edit wish">
+              <mat-icon>edit</mat-icon>
+            </button>
+            
+            <button mat-icon-button color="warn" (click)="handleDeleteClick(element); $event.stopPropagation()" 
+                    matTooltip="Delete wish">
+              <mat-icon>delete</mat-icon>
+            </button>
+            
+            <button mat-icon-button color="accent" 
+                    (click)="handleConvertToReservation(element); $event.stopPropagation()" 
+                    matTooltip="Convert to reservation"
+                    [disabled]="element.book_status !== 'Available'">
+              <mat-icon>swap_horiz</mat-icon>
+            </button>
+          </div>
+        </ng-template>
+      </app-common-material-table>
+    </div>
+  </div>

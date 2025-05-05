@@ -14,8 +14,8 @@ export interface News {
     visibility: string;
     category: string;
     image_url: string;
-    published_by: Staff;
-    branch: Branch;
+    published_by?: Staff;
+    branch?: Branch;
 }
 
 export interface NewsCreate {

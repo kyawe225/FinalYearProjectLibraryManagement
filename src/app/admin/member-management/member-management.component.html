@@ -1,0 +1,28 @@
+<div class="admin-container">
+    <div class="admin-header">
+      <h1>Member Management</h1>
+      <button class="add-button" mat-raised-button color="primary" (click)="onAddMember()">
+        <mat-icon>add</mat-icon> Add New Member
+      </button>
+    </div>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [displayedColumns]="displayedColumns"
+        [dataSource]="dataSource"
+        title="Members"
+        [showFilter]="true"
+        [showPaginator]="true"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 50, 100]"
+        [actionsColumn]="true"
+        [loading]="loading"
+        emptyStateMessage="No members found"
+        (rowClick)="onViewMember($event)"
+        (editClick)="onEditMember($event)"
+        (deleteClick)="onDeleteMember($event)"
+        (viewClick)="onViewMember($event)"
+        (refresh)="onRefresh()">
+      </app-common-material-table>
+    </div>
+  </div>

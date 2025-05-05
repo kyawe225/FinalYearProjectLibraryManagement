@@ -1,7 +1,79 @@
-<div class="h3 py-2"> News </div>
-<div class="row gy-2 py-2 gap-0 g-0" >
-    
-    @for(i of news(); track i){
-        <app-news-card [news]="i"></app-news-card>
-    }
-</div>
+<div class="news-container">
+    <div class="header-section">
+      <h1 class="page-title">Library News</h1>
+      <div class="filter-controls">
+        <mat-form-field appearance="outline">
+          <mat-label>Filter by category</mat-label>
+          <mat-select [(ngModel)]="selectedCategory" (selectionChange)="applyFilters()">
+            <mat-option value="">All Categories</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Sort by</mat-label>
+          <mat-select [(ngModel)]="sortOption" (selectionChange)="applyFilters()">
+            <mat-option value="newest">Newest first</mat-option>
+            <mat-option value="oldest">Oldest first</mat-option>
+            <mat-option value="importance">Importance</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="search-box">
+      <mat-form-field appearance="outline" class="search-input">
+        <mat-label>Search news</mat-label>
+        <input matInput [(ngModel)]="searchText" (keyup)="applyFilters()" placeholder="Enter keywords">
+        <button *ngIf="searchText" matSuffix mat-icon-button aria-label="Clear" (click)="searchText=''; applyFilters()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading news...</p>
+    </div>
+  
+    <div *ngIf="!loading && filteredNews.length === 0" class="no-news">
+      <mat-icon>info</mat-icon>
+      <p>No news found. Try changing your filters or search terms.</p>
+    </div>
+  
+    <div class="news-list">
+      <mat-card *ngFor="let newsItem of filteredNews" class="news-card" [ngClass]="'importance-' + newsItem.importance_level.toLowerCase()">
+        <div class="card-content">
+          <div class="news-image" *ngIf="newsItem.image_url">
+            <img [src]="newsItem.image_url" alt="News image">
+          </div>
+          <div class="news-details">
+            <div class="news-header">
+              <h2 class="news-title" [routerLink]="['/news', newsItem.news_id]">{{ newsItem.title }}</h2>
+              <div class="news-meta">
+                <span class="news-date">{{ newsItem.publication_date | date:'medium' }}</span>
+                <span class="news-category" *ngIf="newsItem.category">{{ newsItem.category }}</span>
+                <span class="news-importance">{{ newsItem.importance_level }}</span>
+              </div>
+            </div>
+            <p class="news-excerpt">{{ newsItem.content | slice:0:200 }}{{ newsItem.content.length > 200 ? '...' : '' }}</p>
+            <div class="news-footer">
+              <button mat-button color="primary" [routerLink]="['/news', newsItem.news_id]">Read More</button>
+              <div class="expiry" *ngIf="newsItem.expiry_date">
+                <mat-icon>timer</mat-icon>
+                <span>Valid until: {{ newsItem.expiry_date | date:'mediumDate' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  
+    <mat-paginator *ngIf="filteredNews.length > 0"
+                  [length]="totalItems"
+                  [pageSize]="pageSize"
+                  [pageSizeOptions]="[5, 10, 25, 50]"
+                  (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>

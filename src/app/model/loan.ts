@@ -1,17 +1,17 @@
-export interface Loan {
-    loanId: string;
-    bookId: string;
-    memberId: string;
-    dateBorrowed: Date;  // Using Date since TypeScript doesn't have DateOnly
-    dueDate: Date;
-    dateReturned: Date | null;
-    status: string | null;
-    fineAmount: number | null;  // Using number for decimal
+export interface BookLoan {
+    loan_id: string;
+    book_id: string;
+    member_id: string;
+    date_borrowed: Date;
+    due_date: Date;
+    date_returned?: Date;
+    status: 'Active' | 'Returned' | 'Overdue' | 'Lost';
+    fine_amount: number;
 
-    // Navigation properties
-    // book: BookViewModel;
-    // fines: Fine[];
-    // member: UserViewModel;
+    // Joined data
+    book_title?: string;
+    book_isbn?: string;
+    member_name?: string;
 }
 
 export interface LoanCreateViewModel {

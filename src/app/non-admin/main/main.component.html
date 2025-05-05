@@ -1,40 +1,200 @@
-<div class="">
-    <div class="card rounded-3 mt-1 mb-2">
-        <div class="card-body">
-            <div class="d-flex flex-grow-1 justify-content-between align-items-center ">
-                <div class="lh-lg">
-                    <h2 class="lh-lg">Welcome From Library!</h2>
-                    <h4 class="lh-lg p-2 text-wrap">
-                        Your gateway to books, learning, and community. Explore, discover, and grow!
-                    </h4>
-                </div>
-                <div>
-                    <img src="/img/1lej9cck 1.png" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row m-1 align-items-center">
-        <h2 class="m-2 col-md-8">News</h2>
-        <div class="col-md-3 ms-auto text-end"><img src="/img/arrow_forward.png"></div>
-    </div>
-    <hr class="m-2" />
-    <!-- news section -->
-    <div class="card card-body rounded-3">
-        @for(i of news(); track i){
-            <div class="row g-2 m-2">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="btn rounded-pill border border-1 border-primary pe-none">{{"News"}}</div>
-                            <h3>{{i.title}}</h3>
-                            <p class="h6 my-2 fw-semibold">{{i.publication_date.toDateString()}}</p>
-                            <p>{{i.content}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            }
-    </div>
-<!-- end news section -->
+<div class="welcome-banner">
+  <div class="welcome-content">
+    <h1>Welcome back, {{ userName }}!</h1>
+    <p>{{ todayDate | date:'fullDate' }}</p>
+  </div>
+</div>
 
+<div class="dashboard-container">
+  <!-- Quick Stats Section -->
+  <div class="dashboard-section stats-section">
+    <h2>My Library Dashboard</h2>
+    <div class="stats-cards">
+      <mat-card class="stats-card">
+        <mat-card-content>
+          <div class="stat-value">{{ borrowedBooks }}</div>
+          <div class="stat-label">Borrowed Books</div>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button color="primary" routerLink="/member/borrowed">VIEW ALL</a>
+        </mat-card-actions>
+        <mat-icon class="stat-icon">book</mat-icon>
+      </mat-card>
+
+      <mat-card class="stats-card">
+        <mat-card-content>
+          <div class="stat-value">{{ reservedBooks }}</div>
+          <div class="stat-label">Reserved Books</div>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button color="primary" routerLink="/member/reserved">VIEW ALL</a>
+        </mat-card-actions>
+        <mat-icon class="stat-icon">bookmark</mat-icon>
+      </mat-card>
+
+      <mat-card class="stats-card">
+        <mat-card-content>
+          <div class="stat-value">{{ upcomingAppointments }}</div>
+          <div class="stat-label">Upcoming Appointments</div>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button color="primary" routerLink="/member/appointments">VIEW ALL</a>
+        </mat-card-actions>
+        <mat-icon class="stat-icon">event</mat-icon>
+      </mat-card>
+
+      <mat-card class="stats-card" [ngClass]="{'warning-card': dueBooks.length > 0}">
+        <mat-card-content>
+          <div class="stat-value">{{ dueBooks }}</div>
+          <div class="stat-label">Books Due Soon</div>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button color="primary" routerLink="/member/borrowed">VIEW ALL</a>
+        </mat-card-actions>
+        <mat-icon class="stat-icon">notification_important</mat-icon>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="dashboard-layout">
+    <!-- Left Column -->
+    <div class="dashboard-column">
+      <!-- Featured Books Section -->
+      <div class="dashboard-section featured-books-section">
+        <div class="section-header">
+          <h2>Featured Books</h2>
+          <a mat-button color="primary" routerLink="/member/catalog">VIEW ALL</a>
+        </div>
+        
+        <div class="books-grid">
+          <mat-card *ngFor="let book of featuredBooks" class="book-card">
+            <img mat-card-image src="fajfkajf" alt="{{ book.title }}" class="book-cover">
+            <mat-card-content>
+              <h3 class="book-title">{{ book.title }}</h3>
+              <p class="book-author">{{ book.author_names }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button color="primary">RESERVE</button>
+              <button mat-button color="accent">DETAILS</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Recent News Section -->
+      <div class="dashboard-section news-section">
+        <div class="section-header">
+          <h2>Library News</h2>
+          <a mat-button color="primary" routerLink="/member/news">VIEW ALL</a>
+        </div>
+        
+        <mat-card *ngFor="let item of recentNews" class="news-card">
+          <mat-card-header>
+            <mat-card-title>{{ item.title }}</mat-card-title>
+            <mat-card-subtitle>{{ item.publication_date| date }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ item.content }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary">READ MORE</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="dashboard-column">
+      <!-- Notifications Section -->
+      <div class="dashboard-section notifications-section">
+        <div class="section-header">
+          <h2>
+            Notifications
+            <span class="badge" *ngIf="getUnreadCount() > 0">{{ getUnreadCount() }}</span>
+          </h2>
+          <button mat-button color="primary" (click)="markAllAsRead()" [disabled]="getUnreadCount() === 0">
+            MARK ALL AS READ
+          </button>
+        </div>
+        
+        <div class="notification-list">
+          <mat-card *ngFor="let notification of notifications" 
+            class="notification-card"
+            [ngClass]="{
+              'unread': !notification.read,
+              'info-notification': notification.type === 'info',
+              'warning-notification': notification.type === 'warning',
+              'success-notification': notification.type === 'success'
+            }">
+            <mat-card-content>
+              <div class="notification-header">
+                <mat-icon *ngIf="notification.type === 'info'">info</mat-icon>
+                <mat-icon *ngIf="notification.type === 'warning'">warning</mat-icon>
+                <mat-icon *ngIf="notification.type === 'success'">check_circle</mat-icon>
+                <small>{{ notification.date | date:'medium' }}</small>
+              </div>
+              <p>{{ notification.message }}</p>
+            </mat-card-content>
+            <mat-card-actions *ngIf="!notification.read">
+              <button mat-button color="primary" (click)="markAsRead(notification)">MARK AS READ</button>
+            </mat-card-actions>
+          </mat-card>
+          
+          <div *ngIf="notifications.length === 0" class="empty-state">
+            <mat-icon>notifications_off</mat-icon>
+            <p>No notifications</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Events Section -->
+      <div class="dashboard-section events-section">
+        <div class="section-header">
+          <h2>Upcoming Events</h2>
+          <a mat-button color="primary" routerLink="/member/events">VIEW ALL</a>
+        </div>
+        
+        <mat-card *ngFor="let event of upcomingEvents" class="event-card">
+          <mat-card-header>
+            <div mat-card-avatar class="event-avatar">
+              <mat-icon>event</mat-icon>
+            </div>
+            <mat-card-title>{{ event.name }}</mat-card-title>
+            <mat-card-subtitle>{{ formatEventDate(event.date) }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ event.description }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary">REGISTER</button>
+            <button mat-button color="accent">MORE INFO</button>
+          </mat-card-actions>
+        </mat-card>
+        
+        <div *ngIf="upcomingEvents.length === 0" class="empty-state">
+          <mat-icon>event_busy</mat-icon>
+          <p>No upcoming events</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="dashboard-section quick-actions-section">
+        <h2>Quick Actions</h2>
+        <div class="quick-actions">
+          <button mat-raised-button color="primary" routerLink="/member/search">
+            <mat-icon>search</mat-icon>
+            Search Books
+          </button>
+          <button mat-raised-button color="accent" routerLink="/member/appointments/new">
+            <mat-icon>event_available</mat-icon>
+            Schedule Appointment
+          </button>
+          <button mat-raised-button color="warn" routerLink="/member/feedback">
+            <mat-icon>feedback</mat-icon>
+            Provide Feedback
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,118 @@
+<!-- src/app/admin/fines/fine-management.component.html -->
+
+<div class="fine-container">
+    <div class="fine-stats-row">
+      <mat-card class="stats-card">
+        <div class="stats-icon unpaid">
+          <mat-icon>payments</mat-icon>
+        </div>
+        <div class="stats-content">
+          <div class="stats-label">Unpaid Fines</div>
+          <div class="stats-value">${{ totalUnpaidFines() | number:'1.2-2' }}</div>
+        </div>
+      </mat-card>
+  
+      <mat-card class="stats-card">
+        <div class="stats-icon paid">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="stats-content">
+          <div class="stats-label">Paid Fines</div>
+          <div class="stats-value">${{ totalPaidFines() | number:'1.2-2' }}</div>
+        </div>
+      </mat-card>
+  
+      <mat-card class="stats-card">
+        <div class="stats-icon waived">
+          <mat-icon>cancel</mat-icon>
+        </div>
+        <div class="stats-content">
+          <div class="stats-label">Waived Fines</div>
+          <div class="stats-value">${{ totalWaivedFines() | number:'1.2-2' }}</div>
+        </div>
+      </mat-card>
+    </div>
+  
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Fine Management</mat-card-title>
+        <mat-card-subtitle>Manage late fees and payments</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="filter-container">
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Member</mat-label>
+            <mat-select [value]="selectedMember()" (selectionChange)="selectedMember.set($event.value); onFilterChange()">
+              <mat-option value="">All Members</mat-option>
+              <mat-option *ngFor="let member of members()" [value]="member.id">
+                {{ member.first_name }} {{ member.last_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Status</mat-label>
+            <mat-select [value]="selectedStatus()" (selectionChange)="selectedStatus.set($event.value); onFilterChange()">
+              <mat-option value="">All Statuses</mat-option>
+              <mat-option *ngFor="let status of paymentStatuses()" [value]="status">
+                {{ status }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="handleAddClick()">
+          <mat-icon>add</mat-icon> Add Fine
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [displayedColumns]="displayedColumns()"
+        [dataSource]="dataSource()"
+        [title]="'Fines'"
+        [showFilter]="true"
+        [showPaginator]="true"
+        [pageSize]="10"
+        [loading]="loading()"
+        [actionsColumn]="true"
+        [emptyStateMessage]="'No fines found for the selected filters'"
+        (rowClick)="handleRowClick($event)"
+        (editClick)="handleEditClick($event)"
+        (deleteClick)="handleDeleteClick($event)"
+        (refresh)="handleRefresh()">
+        
+        <!-- Custom column templates -->
+        <ng-template #payment_statusColumnTemplate let-element>
+          <div class="status-chip-container">
+            <span [ngClass]="['status-chip', getStatusClass(element.payment_status)]">
+              {{ element.payment_status }}
+            </span>
+            
+            <!-- Quick action menu - not visible in view mode -->
+            <button mat-icon-button [matMenuTriggerFor]="actionMenu" (click)="$event.stopPropagation()" 
+                    *ngIf="element.payment_status === 'Unpaid'">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            
+            <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="handleRecordPayment(element)">
+                <mat-icon>payments</mat-icon>
+                Record Payment
+              </button>
+              <button mat-menu-item (click)="handleWaiveFine(element)">
+                <mat-icon>cancel</mat-icon>
+                Waive Fine
+              </button>
+            </mat-menu>
+          </div>
+        </ng-template>
+        
+        <ng-template #fine_amountColumnTemplate let-element>
+          ${{ element.fine_amount | number:'1.2-2' }}
+        </ng-template>
+      </app-common-material-table>
+    </div>
+  </div>

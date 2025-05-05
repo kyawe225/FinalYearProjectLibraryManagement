@@ -1,0 +1,132 @@
+<div class="dashboard-container">
+    <div class="header-section">
+      <h1 class="mat-h1">Library Front Desk</h1>
+      <button mat-icon-button color="primary" (click)="refreshData()" [disabled]="isRefreshing" matTooltip="Refresh data">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+      <span>Loading dashboard data...</span>
+    </div>
+  
+    <div *ngIf="!isLoading" class="dashboard-content">
+      <!-- Quick Actions Section -->
+      <div class="quick-actions-section">
+        <h2 class="mat-h2">Quick Actions</h2>
+        <div class="action-cards">
+          <mat-card class="action-card" (click)="navigateToBookReturn()">
+            <mat-card-content>
+              <mat-icon color="primary">keyboard_return</mat-icon>
+              <h3 class="mat-h3">Book Return</h3>
+              <p>Process book returns with barcode scanner</p>
+            </mat-card-content>
+          </mat-card>
+  
+          <mat-card class="action-card" (click)="navigateToBookCheckout()">
+            <mat-card-content>
+              <mat-icon color="primary">book</mat-icon>
+              <h3 class="mat-h3">Book Checkout</h3>
+              <p>Issue books to members</p>
+            </mat-card-content>
+          </mat-card>
+  
+          <mat-card class="action-card" (click)="navigateToAppointments()">
+            <mat-card-content>
+              <mat-icon color="primary">event</mat-icon>
+              <h3 class="mat-h3">Appointments</h3>
+              <p>Manage member appointments</p>
+            </mat-card-content>
+          </mat-card>
+  
+          <mat-card class="action-card" (click)="navigateToMembers()">
+            <mat-card-content>
+              <mat-icon color="primary">people</mat-icon>
+              <h3 class="mat-h3">Members</h3>
+              <p>Search and manage member accounts</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+  
+      <!-- Stats Cards Section -->
+      <div class="stats-section">
+        <h2 class="mat-h2">Today's Activity</h2>
+        <div class="stats-cards">
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-value">{{todayStats.booksCheckedOut}}</div>
+              <div class="stat-label">Books Checked Out</div>
+            </mat-card-content>
+          </mat-card>
+  
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-value">{{todayStats.booksReturned}}</div>
+              <div class="stat-label">Books Returned</div>
+            </mat-card-content>
+          </mat-card>
+  
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-value">{{todayStats.appointmentsScheduled}}</div>
+              <div class="stat-label">Appointments</div>
+            </mat-card-content>
+          </mat-card>
+  
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-value">{{todayStats.activeUsers}}</div>
+              <div class="stat-label">Active Users</div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+  
+      <!-- Scheduled Pickups Section -->
+      <div class="pickups-section">
+        <div class="section-header">
+          <h2 class="mat-h2">Scheduled Pickups</h2>
+          <mat-spinner *ngIf="isRefreshing" diameter="20"></mat-spinner>
+        </div>
+        
+        <div *ngIf="scheduledPickups.length === 0" class="no-pickups">
+          <mat-icon>event_busy</mat-icon>
+          <p>No scheduled pickups for today</p>
+        </div>
+  
+        <mat-card *ngIf="scheduledPickups.length > 0">
+          <mat-card-content>
+            <mat-nav-list>
+              <mat-list-item *ngFor="let pickup of scheduledPickups" class="pickup-item">
+                <mat-icon matListItemIcon color="primary">book</mat-icon>
+                <div matListItemTitle>{{pickup.bookTitle}}</div>
+                <div matListItemLine class="pickup-details">
+                  <span class="member-name">{{pickup.memberName}}</span>
+                  <span class="pickup-time">{{pickup.pickupTime}} • {{pickup.date | date:'shortDate'}}</span>
+                </div>
+                <button mat-icon-button [matMenuTriggerFor]="pickupMenu" aria-label="Pickup actions">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #pickupMenu="matMenu">
+                  <button mat-menu-item>
+                    <mat-icon>done</mat-icon>
+                    <span>Mark as Completed</span>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>notifications</mat-icon>
+                    <span>Notify Member</span>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>schedule</mat-icon>
+                    <span>Reschedule</span>
+                  </button>
+                </mat-menu>
+              </mat-list-item>
+            </mat-nav-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>

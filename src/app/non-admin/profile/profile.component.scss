@@ -1,0 +1,558 @@
+/* Variables */
+:root {
+    --primary-color: #3f51b5;
+    --secondary-color: #f50057;
+    --dark-color: #303030;
+    --light-color: #f5f5f5;
+    --success-color: #66bb6a;
+    --warning-color: #ffa726;
+    --danger-color: #f44336;
+    --transition-speed: 0.3s;
+  }
+  
+  /* Global Styles */
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    color: #303030;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  /* Navbar */
+  .navbar {
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1030;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .navbar-brand {
+    font-weight: 700;
+    color: white;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1020;
+    top: 56px;
+    left: -250px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+    transition: all var(--transition-speed);
+    overflow-y: auto;
+  }
+  
+  .sidebar-open {
+    left: 0;
+  }
+  
+  .sidebar a {
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #424242;
+    display: block;
+    transition: var(--transition-speed);
+  }
+  
+  .sidebar a:hover {
+    background-color: #f1f1f1;
+    color: var(--primary-color);
+  }
+  
+  .sidebar a.active {
+    background-color: #e8eaf6;
+    color: var(--primary-color);
+    border-left: 4px solid var(--primary-color);
+  }
+  
+  .sidebar a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+  }
+  
+  /* Overlay for mobile sidebar */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1010;
+    display: none;
+    transition: all var(--transition-speed);
+  }
+  
+  .overlay-active {
+    display: block;
+  }
+  
+  /* Main Content */
+  .main-content {
+    margin-left: 0;
+    padding: 76px 20px 20px;
+    transition: all var(--transition-speed);
+  }
+  
+  .main-content-shifted {
+    margin-left: 250px;
+  }
+  
+  /* Profile Card */
+  .profile-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  
+  .profile-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 30px;
+    position: relative;
+    height: 150px;
+  }
+  
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid white;
+    background-color: #e0e0e0;
+    position: absolute;
+    bottom: -60px;
+    left: 30px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .profile-avatar i {
+    font-size: 60px;
+    color: #9e9e9e;
+  }
+  
+  .profile-info {
+    padding: 80px 20px 20px;
+  }
+  
+  .profile-name {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  
+  .profile-role {
+    font-size: 16px;
+    color: #757575;
+    margin-bottom: 15px;
+  }
+  
+  .profile-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .profile-detail {
+    flex: 1 1 calc(50% - 15px);
+    min-width: 200px;
+  }
+  
+  .profile-detail span {
+    display: block;
+    font-size: 14px;
+    color: #757575;
+  }
+  
+  .profile-detail strong {
+    display: block;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  .profile-actions {
+    margin-top: 20px;
+  }
+  
+  .btn-edit {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .btn-change-password {
+    background-color: #f5f5f5;
+    color: #424242;
+  }
+  
+  /* Section Titles */
+  .section-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+  }
+  
+  .section-title i {
+    margin-right: 10px;
+  }
+  
+  /* Tab Navigation */
+  .tab-navigation {
+    margin-bottom: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .nav-tabs .nav-link {
+    color: #757575;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 0;
+    font-weight: 500;
+  }
+  
+  .nav-tabs .nav-link.active {
+    color: var(--primary-color);
+    background-color: transparent;
+    border-bottom: 2px solid var(--primary-color);
+  }
+  
+  /* Book Cards */
+  .book-card {
+    display: flex;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    overflow: hidden;
+    background-color: white;
+  }
+  
+  .book-cover {
+    width: 80px;
+    min-width: 80px;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .book-cover i {
+    font-size: 30px;
+    color: #9e9e9e;
+  }
+  
+  .book-details {
+    padding: 15px;
+    flex-grow: 1;
+    overflow: hidden;
+  }
+  
+  .book-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    white-space: normal;
+    word-break: break-word;
+  }
+  
+  .book-author {
+    font-size: 14px;
+    color: #757575;
+    margin-bottom: 10px;
+  }
+  
+  .book-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .status-borrowed {
+    background-color: #e8f5e9;
+    color: var(--success-color);
+  }
+  
+  .status-overdue {
+    background-color: #ffebee;
+    color: var(--danger-color);
+  }
+  
+  .status-reserved {
+    background-color: #fff8e1;
+    color: var(--warning-color);
+  }
+  
+  .book-due {
+    font-size: 13px;
+    color: #757575;
+    margin-top: 10px;
+  }
+  
+  /* Activity Cards */
+  .activity-card {
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    background-color: white;
+  }
+  
+  .activity-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  
+  .activity-date {
+    font-size: 14px;
+    color: #757575;
+    margin-bottom: 10px;
+  }
+  
+  .activity-details {
+    font-size: 14px;
+    color: #424242;
+  }
+  
+  /* Statistics Cards */
+  .stats-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 100%;
+  }
+  
+  .stats-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    font-size: 24px;
+  }
+  
+  .stats-icon.books {
+    background-color: #e8f5e9;
+    color: var(--success-color);
+  }
+  
+  .stats-icon.reservations {
+    background-color: #fff8e1;
+    color: var(--warning-color);
+  }
+  
+  .stats-icon.fines {
+    background-color: #ffebee;
+    color: var(--danger-color);
+  }
+  
+  .stats-icon.events {
+    background-color: #e3f2fd;
+    color: #2196f3;
+  }
+  
+  .stats-number {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .stats-label {
+    font-size: 14px;
+    color: #757575;
+  }
+  
+  /* Tables */
+  .table-responsive {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table th {
+    font-weight: 500;
+    color: #757575;
+    border-top: none;
+  }
+  
+  .badge {
+    padding: 5px 10px;
+  }
+  
+  .badge-success {
+    background-color: var(--success-color);
+  }
+  
+  .badge-warning {
+    background-color: var(--warning-color);
+  }
+  
+  .badge-danger {
+    background-color: var(--danger-color);
+  }
+  
+  /* Responsive Adjustments */
+  @media (min-width: 992px) {
+    .navbar {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    
+    .sidebar {
+      left: 0;
+    }
+    
+    .main-content {
+      margin-left: 250px;
+    }
+    
+    .overlay {
+      display: none !important;
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .main-content {
+      padding: 76px 15px 15px;
+    }
+    
+    .profile-detail {
+      flex: 1 1 100%;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .profile-header {
+      height: 120px;
+    }
+    
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      bottom: -50px;
+      left: 20px;
+    }
+    
+    .profile-avatar i {
+      font-size: 50px;
+    }
+    
+    .profile-info {
+      padding: 60px 15px 15px;
+    }
+    
+    .profile-name {
+      font-size: 20px;
+    }
+    
+    .book-title {
+      font-size: 14px;
+    }
+    
+    .book-cover {
+      width: 60px;
+      min-width: 60px;
+    }
+    
+    .stats-icon {
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+    }
+    
+    .stats-number {
+      font-size: 18px;
+    }
+    
+    .stats-label {
+      font-size: 12px;
+    }
+    
+    .table th, .table td {
+      padding: 0.5rem;
+      font-size: 14px;
+    }
+    
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 575px) {
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      bottom: -40px;
+    }
+    
+    .profile-avatar i {
+      font-size: 40px;
+    }
+    
+    .profile-info {
+      padding: 50px 15px 15px;
+    }
+    
+    .book-cover {
+      width: 50px;
+      min-width: 50px;
+    }
+    
+    .book-details {
+      padding: 10px;
+    }
+    
+    .book-title {
+      font-size: 14px;
+    }
+    
+    .book-author {
+      font-size: 12px;
+    }
+    
+    .book-status {
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+    
+    .book-due {
+      font-size: 11px;
+    }
+  }

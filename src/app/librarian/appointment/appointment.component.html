@@ -1,0 +1,44 @@
+<div class="member-appointments-container">
+    <app-common-material-table
+      [displayedColumns]="displayedColumns"
+      [dataSource]="dataSource()"
+      [title]="'Member Appointments'"
+      [showFilter]="true"
+      [showPaginator]="true"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      [loading]="loading()"
+      [actionsColumn]="true"
+      [emptyStateMessage]="'No appointments found for this member.'"
+      (refresh)="loadAppointments()">
+      
+      <!-- Custom column templates -->
+      <ng-template let-element column="appointment_date">
+        {{ formatDate(element.appointment_date) }}
+      </ng-template>
+      
+      <ng-template let-element column="time">
+        {{ formatTimeRange(element.start_time, element.end_time) }}
+      </ng-template>
+      
+      <ng-template let-element column="status">
+        <span class="status-chip" [ngClass]="element.status.toLowerCase()">
+          {{ element.status }}
+        </span>
+      </ng-template>
+      
+      <ng-template let-element appTableActions>
+        <!-- Book Transactions Button -->
+        <button mat-icon-button color="primary" matTooltip="View Book Transactions" 
+          (click)="viewBookTransactions(element); $event.stopPropagation()">
+          <mat-icon>book</mat-icon>
+        </button>
+        
+        <!-- Cancel Button - Only for Scheduled appointments -->
+        <button *ngIf="element.status === 'Scheduled'" mat-icon-button color="warn" 
+          matTooltip="Cancel Appointment" (click)="cancelAppointment(element, $event)">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </ng-template>
+    </app-common-material-table>
+  </div>

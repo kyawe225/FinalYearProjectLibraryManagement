@@ -1,0 +1,195 @@
+/* src/app/admin/reservations/reservation-management.component.scss */
+
+@use "sass:map";
+@use '../../../../theme-colors' as colors;
+
+.reservation-container {
+  padding: 20px;
+  
+  .reservation-stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    
+    .stats-card {
+      flex: 1;
+      min-width: 200px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      background-color: colors.$card-background;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      
+      .stats-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        margin-right: 16px;
+        
+        mat-icon {
+          font-size: 24px;
+          height: 24px;
+          width: 24px;
+          color: white;
+        }
+        
+        &.active {
+          background-color: colors.$primary-color;
+        }
+        
+        &.fulfilled {
+          background-color: colors.$accent-color;
+        }
+        
+        &.expired {
+          background-color: colors.$error-color;
+        }
+      }
+      
+      .stats-content {
+        .stats-label {
+          font-size: 0.875rem;
+          color: colors.$text-medium;
+          margin-bottom: 4px;
+        }
+        
+        .stats-value {
+          font-size: 1.5rem;
+          font-weight: 500;
+          color: colors.$text-dark;
+        }
+      }
+    }
+  }
+  
+  .header-card {
+    margin-bottom: 20px;
+    background-color: colors.$card-background;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    mat-card-title {
+      color: colors.$primary-color;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+    
+    mat-card-subtitle {
+      color: colors.$text-medium;
+      margin-top: 4px;
+    }
+    
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+      
+      .filter-field {
+        flex: 1;
+        min-width: 200px;
+      }
+    }
+    
+    mat-card-actions {
+      padding: 0 16px 16px;
+    }
+  }
+  
+  .table-container {
+    background-color: colors.$card-background;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .status-chip-container {
+    display: flex;
+    align-items: center;
+    
+    .status-chip {
+      padding: 4px 8px;
+      border-radius: 16px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      
+      &.status-active {
+        background-color: rgba(map.get(colors.$palettes, primary, 40), 0.12);
+        color: colors.$primary-color;
+      }
+      
+      &.status-fulfilled {
+        background-color: rgba(map.get(colors.$palettes, secondary, 40), 0.12);
+        color: colors.$accent-color;
+      }
+      
+      &.status-expired {
+        background-color: rgba(map.get(colors.$palettes, error, 40), 0.12);
+        color: colors.$error-color;
+      }
+      
+      &.status-cancelled {
+        background-color: rgba(map.get(colors.$palettes, neutral, 40), 0.12);
+        color: map.get(colors.$palettes, neutral, 40);
+      }
+    }
+    
+    button {
+      margin-left: 4px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      
+      mat-icon {
+        font-size: 16px;
+        height: 16px;
+        width: 16px;
+        line-height: 16px;
+      }
+    }
+  }
+  
+  .availability-chip {
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    &.availability-available {
+      background-color: rgba(map.get(colors.$palettes, primary, 40), 0.12);
+      color: colors.$primary-color;
+    }
+    
+    &.availability-unavailable {
+      background-color: rgba(map.get(colors.$palettes, error, 40), 0.12);
+      color: colors.$error-color;
+    }
+  }
+  
+  ::ng-deep {
+    .mat-column-reservationdate,
+    .mat-column-bookavailability {
+      max-width: 120px;
+    }
+    
+    .mat-column-status {
+      min-width: 140px;
+    }
+    
+    .mat-column-membername,
+    .mat-column-booktitle {
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

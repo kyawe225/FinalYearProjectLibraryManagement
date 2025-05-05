@@ -1,0 +1,112 @@
+@use '../../../../theme-colors' as colors;
+
+.publisher-management-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .header-section {
+    margin-bottom: 24px;
+
+    h1 {
+      color: colors.$primary-color;
+      margin-bottom: 8px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    p {
+      color: colors.$text-medium;
+      margin: 0;
+      font-size: 16px;
+    }
+  }
+
+  .actions-section {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      background-color: colors.$primary-color;
+      color: colors.$text-light;
+
+      &:hover {
+        background-color: colors.$primary-darker;
+      }
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .table-container {
+    background-color: colors.$card-background;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 16px;
+    overflow: hidden;
+  }
+
+  ::ng-deep {
+    .mat-mdc-card-content {
+      padding: 0;
+    }
+
+    .mat-column-name {
+      font-weight: 500;
+    }
+
+    .mat-column-actions {
+      width: 120px;
+      text-align: right;
+    }
+
+    // Style for table header
+    .mat-header-cell {
+      background-color: colors.$primary-lighter;
+      color: colors.$primary-darkest;
+      font-weight: 500;
+    }
+
+    // Style for table rows on hover
+    .mat-row:hover {
+      background-color: rgba(colors.$primary-lighter, 0.3);
+    }
+
+    // Style for the filter input
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      color: colors.$primary-light;
+    }
+
+    // Primary buttons
+    .mat-flat-button.mat-primary, 
+    .mat-raised-button.mat-primary, 
+    .mat-fab.mat-primary, 
+    .mat-mini-fab.mat-primary {
+      background-color: colors.$primary-color;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .publisher-management-container {
+    padding: 16px;
+
+    .actions-section {
+      button {
+        width: 100%;
+      }
+    }
+
+    ::ng-deep {
+      // Hide less important columns on small screens
+      .mat-column-website,
+      .mat-column-phone {
+        display: none;
+      }
+    }
+  }
+}

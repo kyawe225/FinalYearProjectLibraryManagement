@@ -1,40 +1,56 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { PublisherCreate } from '../model/publisher';
-import { BookCreate } from '../model/book';
+import { Publisher, PublisherResponse, SinglePublisherResponse } from '../model/publisher';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PublisherService {
-  private baseUrl = environment.apiUrl;
-  private baseUri = "publisher";
-  private http: HttpClient;
+  private apiUrl = `${environment.apiUrl}/publishers`;
 
+  constructor(private http: HttpClient) { }
 
-  constructor(http: HttpClient) {
-    this.http = http;
+  // Get all publishers with optional pagination and filtering
+  getPublishers(
+    page: number = 0, 
+    pageSize: number = 10, 
+    sortField: string = 'name', 
+    sortDirection: string = 'asc', 
+    filter: string = ''
+  ): Observable<PublisherResponse> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString())
+      .set('sortField', sortField)
+      .set('sortDirection', sortDirection);
+    
+    if (filter) {
+      params = params.set('filter', filter);
+    }
+
+    return this.http.get<PublisherResponse>(this.apiUrl, { params });
   }
 
-  getAll() {
-    return this.http.get(this.baseUrl + this.baseUri);
+  // Get a single publisher by ID
+  getPublisherById(id: string): Observable<SinglePublisherResponse> {
+    return this.http.get<SinglePublisherResponse>(`${this.apiUrl}/${id}`);
   }
 
-  getDetail(id: string) {
-    return this.http.get(this.baseUrl + this.baseUri + "/"+ id);
+  // Create a new publisher
+  createPublisher(publisher: Publisher): Observable<SinglePublisherResponse> {
+    return this.http.post<SinglePublisherResponse>(this.apiUrl, publisher);
   }
 
-  create(model: PublisherCreate) {
-    return this.http.post(this.baseUrl + this.baseUri, model);
+  // Update an existing publisher
+  updatePublisher(publisher: Publisher): Observable<SinglePublisherResponse> {
+    return this.http.put<SinglePublisherResponse>(`${this.apiUrl}/${publisher.id}`, publisher);
   }
 
-  update(id: string, model: PublisherCreate) {
-    return this.http.put(this.baseUrl + this.baseUri + "/" + id, model)
+  // Delete a publisher
+  deletePublisher(id: string): Observable<SinglePublisherResponse> {
+    return this.http.delete<SinglePublisherResponse>(`${this.apiUrl}/${id}`);
   }
-
-  delete(id: string) {
-    return this.http.delete(this.baseUrl + this.baseUri + "/" + id)
-  }
-
 }
+

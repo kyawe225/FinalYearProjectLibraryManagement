@@ -1,64 +1,99 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary mb-2">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="https://placeholder.pics/svg/150" alt="Profile" class=" m-1" style="width: 65px; height: 44px;">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <div class="toolbar-container">
+    <div class="logo-container">
+      <button mat-icon-button (click)="toggleMenu()" class="menu-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="logo">University Library</span>
+    </div>
+    <div class="user-actions">
+      <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
+        <mat-icon>account_circle</mat-icon>
+        <span>{{ userName }}</span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item routerLink="/member/profile">
+          <mat-icon>person</mat-icon>
+          <span>My Profile</span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mb-2 mb-lg-0 ms-auto px-2">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/" [className]="currentRoute == '' ? 'active nav-link' : 'nav-link'">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/book/search" [className]="currentRoute.startsWith('book')  == true ? 'active nav-link' : 'nav-link'">Search</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/news/list" [className]="currentRoute.startsWith('news') == true ? 'active nav-link' : 'nav-link'">News</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact-us" [className]="currentRoute == 'contact-us' ? 'active nav-link' : 'nav-link'">About Us</a>
-                </li>
-            </ul>
-            @if(authService.isAuthenticated.getValue()){
-            <div class="dropdown" ngbDropdown>
-                <button class="btn btn-secondary dropdown-toggle" ngbDropdownToggle type="button"
-                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="https://placeholder.pics/svg/150" alt="Profile" class="rounded-3 m-1"
-                        style="width: 30px; height: 30px;">
-                    Kyaw Zin Htet
-                </button>
-                <div ngbDropdownMenu class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                    <a ngbDropdownItem class="dropdown-item py-1" href="user/profile">Profile</a>
-                    <a ngbDropdownItem class="dropdown-item py-1" href="#">Favourite</a>
-                    <a ngbDropdownItem class="dropdown-item py-1" href="#">Reserved Items</a>
-                    <a ngbDropdownItem class="dropdown-item py-1" href="#">Borrowed Items</a>
-                    <a ngbDropdownItem class="dropdown-item py-1" href="#">Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a ngbDropdownItem class="dropdown-item py-1" (click)="logout()">Logout</a>
-                </div>
-            </div>
-            } @else{
-            <a class="btn btn-primary" href="/auth/login">Login</a>
-            }
-        </div>
+        <button mat-menu-item routerLink="/member/borrowed">
+          <mat-icon>book</mat-icon>
+          <span>My Borrowed Books</span>
+        </button>
+        <button mat-menu-item routerLink="/member/reserved">
+          <mat-icon>bookmark</mat-icon>
+          <span>My Reservations</span>
+        </button>
+        <button mat-menu-item routerLink="/member/appointments">
+          <mat-icon>event</mat-icon>
+          <span>My Appointments</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
     </div>
-</nav>
+  </div>
+</mat-toolbar>
 
-<div class="container">
-    <router-outlet></router-outlet>
-</div>
-
-<footer class="d-flex flex-wrap p-2 border-top align-items-center bg-light mt-2">
-    <div class="col-lg-4 col-12">
-        <h4>Library Management System</h4>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav [opened]="isMenuOpen" [mode]="'side'" class="sidenav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/member/dashboard" routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/member/catalog" routerLinkActive="active">
+        <mat-icon>menu_book</mat-icon>
+        <span>Book Catalog</span>
+      </a>
+      <a mat-list-item routerLink="/member/search" routerLinkActive="active">
+        <mat-icon>search</mat-icon>
+        <span>Search Books</span>
+      </a>
+      <a mat-list-item routerLink="/member/borrow" routerLinkActive="active">
+        <mat-icon>import_contacts</mat-icon>
+        <span>Borrow Book</span>
+      </a>
+      <a mat-list-item routerLink="/member/reserve" routerLinkActive="active">
+        <mat-icon>bookmark_border</mat-icon>
+        <span>Reserve Book</span>
+      </a>
+      <a mat-list-item routerLink="/member/appointments/new" routerLinkActive="active">
+        <mat-icon>event_available</mat-icon>
+        <span>Schedule Appointment</span>
+      </a>
+      <a mat-list-item routerLink="/member/events" routerLinkActive="active">
+        <mat-icon>event</mat-icon>
+        <span>Library Events</span>
+      </a>
+      <a mat-list-item routerLink="/member/feedback" routerLinkActive="active">
+        <mat-icon>feedback</mat-icon>
+        <span>Provide Feedback</span>
+      </a>
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/member/faq" routerLinkActive="active">
+        <mat-icon>help</mat-icon>
+        <span>FAQ</span>
+      </a>
+      <a mat-list-item routerLink="/member/help" routerLinkActive="active">
+        <mat-icon>support</mat-icon>
+        <span>Help & Support</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="main-content">
+      <router-outlet></router-outlet>
     </div>
-    <div class="col-lg-5">
-        <p>Library Management System Provided By Kyawe</p>
-    </div>
-    <div class="col-lg-3">
-        <p>2022 all rights receieved.</p>
-    </div>
-</footer>
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2025 University Library Management System. All rights reserved.</p>
+        <p>Designed by Kyaw Zin Htet</p>
+      </div>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

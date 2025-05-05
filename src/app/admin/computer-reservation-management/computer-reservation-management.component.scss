@@ -1,0 +1,116 @@
+/* src/app/admin/computer-reservations/computer-reservation-management.component.scss */
+
+@use 'sass:map';
+@use '../../../../theme-colors' as theme-colors;
+
+.computer-reservation-container {
+  padding: 20px;
+  
+  .header-card {
+    margin-bottom: 20px;
+    background-color: theme-colors.$card-background;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    mat-card-title {
+      color: theme-colors.$primary-color;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+    
+    mat-card-subtitle {
+      color: theme-colors.$text-medium;
+      margin-top: 4px;
+    }
+    
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+      
+      .filter-field {
+        flex: 1;
+        min-width: 200px;
+      }
+    }
+    
+    mat-card-actions {
+      padding: 0 16px 16px;
+    }
+  }
+  
+  .table-container {
+    background-color: theme-colors.$card-background;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .status-chip-container {
+    display: flex;
+    align-items: center;
+    
+    .status-chip {
+      padding: 4px 8px;
+      border-radius: 16px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      
+      &.status-active {
+        background-color: rgba(map.get(theme-colors.$palettes, primary, 40), 0.12);
+        color: theme-colors.$primary-color;
+      }
+      
+      &.status-completed {
+        background-color: rgba(map.get(theme-colors.$palettes, secondary, 40), 0.12);
+        color: theme-colors.$accent-color;
+      }
+      
+      &.status-cancelled {
+        background-color: rgba(map.get(theme-colors.$palettes, error, 40), 0.12);
+        color: theme-colors.$error-color;
+      }
+      
+      &.status-no-show {
+        background-color: rgba(map.get(theme-colors.$palettes, tertiary, 40), 0.12);
+        color: theme-colors.$tertiary-color;
+      }
+    }
+    
+    button {
+      margin-left: 4px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      
+      mat-icon {
+        font-size: 16px;
+        height: 16px;
+        width: 16px;
+        line-height: 16px;
+      }
+    }
+  }
+  
+  ::ng-deep {
+    .mat-column-reservationdate,
+    .mat-column-timeslot {
+      max-width: 120px;
+    }
+    
+    .mat-column-status {
+      min-width: 140px;
+    }
+    
+    .mat-column-computername,
+    .mat-column-membername,
+    .mat-column-branchname {
+      max-width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

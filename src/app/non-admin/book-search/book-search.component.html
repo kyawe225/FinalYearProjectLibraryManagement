@@ -1,106 +1,134 @@
-<div class="">
-    <div class="row g-1 m-auto justify-content-center p-5 bg-dark my-2 rounded-3">
-        <div class="col-md-12 mb-2">
-            <input type="text" class="form-control" placeholder="Search for a book">
+<div class="book-list-container">
+    <div class="header-section">
+      <h1>Library Book Catalog</h1>
+      <p>Discover our extensive collection of books available for borrowing</p>
+    </div>
+  
+    <div class="search-section">
+      <form [formGroup]="searchForm" class="search-form">
+        <div class="search-input-container">
+          <mat-form-field appearance="outline" class="search-input">
+            <mat-label>Search by title or author</mat-label>
+            <input matInput formControlName="query" placeholder="Enter keywords...">
+            <button *ngIf="searchForm.get('query')?.value" matSuffix mat-icon-button aria-label="Clear" 
+                    (click)="searchForm.get('query')?.setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-icon matPrefix>search</mat-icon>
+          </mat-form-field>
         </div>
-        <div ngbAccordion>
-            <div ngbAccordionItem [collapsed]="isClosedAdvancedSearch" (show)="openAdvancedSearch()"
-                (hide)="closeAdvancedSearch()">
-                <h2 ngbAccordionHeader>
-                    <button ngbAccordionButton>Advanced Search</button>
-                </h2>
-                <div ngbAccordionCollapse>
-                    <div ngbAccordionBody>
-                        <ng-template>
-                            <p class="fw-semibold py-1">Search Fields</p>
-                            <div class="row mb-2">
-                                <div class="col-md-6">
-                                    <label for="author" class="form-label">Type</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <select class="form-select">
-                                        <option value="all">All</option>
-                                        <option value="soba">Soba</option>
-                                        <option value="all">All</option>
-                                        <option value="all">All</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-2 align-items-center">
-                                <div class="col-md-6">
-                                    <label for="author" class="form-label">Author</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="row mb-2 align-items-center">
-                                <div class="col-md-6">
-                                    <label for="author" class="form-label">Publisher</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="row mb-2 align-items-center">
-                                <div class="col-md-6">
-                                    <label for="author" class="form-label">Publication Year</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="row mb-2 align-items-center">
-                                <div class="col-md-6">
-                                    <label for="author" class="form-label">Genre</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <select class="form-select">
-                                        <option value="all">All</option>
-                                        <option value="all">All</option>
-                                        <option value="all">All</option>
-                                        <option value="all">All</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-2 align-items-center">
-                                <div class="col-md-6">
-                                    <label for="author" class="form-label">Category</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <select class="form-select">
-                                        <option value="all">All</option>
-                                        <option value="all">All</option>
-                                        <option value="all">All</option>
-                                        <option value="all">All</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </div>
-                </div>
+  
+        <div class="filter-container">
+          <mat-form-field appearance="outline" class="category-filter">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="">All Categories</mat-option>
+              <mat-option *ngFor="let category of categories" [value]="category.category_id">
+                {{category.category_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="sort-filter">
+            <mat-label>Sort by</mat-label>
+            <mat-select formControlName="sortBy">
+              <mat-option value="title">Title (A-Z)</mat-option>
+              <mat-option value="publication_date">Newest First</mat-option>
+              <mat-option value="added_date">Recently Added</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <button mat-stroked-button color="primary" class="reset-button" (click)="resetFilters()">
+            <mat-icon>refresh</mat-icon> Reset
+          </button>
+        </div>
+      </form>
+    </div>
+  
+    <div *ngIf="loading" class="loading-section">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading books...</p>
+    </div>
+  
+    <div *ngIf="error" class="error-section">
+      <mat-icon color="warn">error_outline</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="ngOnInit()">Retry</button>
+    </div>
+  
+    <div *ngIf="!loading && !error" class="results-section">
+      <div *ngIf="filteredBooks.length === 0" class="no-results">
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+        <p>No books match your search criteria.</p>
+        <button mat-stroked-button color="primary" (click)="resetFilters()">Clear filters</button>
+      </div>
+  
+      <div *ngIf="filteredBooks.length > 0" class="results-count">
+        Showing {{ filteredBooks.length }} book{{ filteredBooks.length !== 1 ? 's' : '' }}
+      </div>
+  
+      <div class="book-grid">
+        <div *ngFor="let book of filteredBooks" class="book-card" (click)="viewBookDetails(book.book_id)">
+          <div class="book-cover">
+            <img src="assets/images/book-covers/{{ book.isbn || 'default' }}.jpg" 
+                 alt="{{ book.title }}" 
+                 onerror="this.src='assets/images/book-covers/default.jpg'">
+            
+            <div class="book-status" [ngClass]="book.status.toLowerCase()">
+              {{ book.status }}
             </div>
+          </div>
+          
+          <div class="book-info">
+            <h3 class="book-title" [title]="book.title">{{ book.title }}</h3>
+            <p class="book-authors" *ngIf="book.authors">
+              {{ book.author_names }}
+            </p>
+            <p class="book-category" *ngIf="book.category_name">{{ book.category_name }}</p>
+            <p class="book-publication" *ngIf="book.publication_date">
+              {{ book.publication_date | date:'yyyy' }}
+            </p>
+          </div>
+          
+          <div class="book-actions">
+            <!-- Action buttons differ based on login status -->
+            <ng-container *ngIf="isLoggedIn; else loginPrompt">
+              <button mat-icon-button color="primary" class="details-btn" 
+                      matTooltip="View Details" (click)="viewBookDetails(book.book_id)">
+                <mat-icon>info</mat-icon>
+              </button>
+              
+              <button *ngIf="!isInWishlist(book.book_id)" mat-icon-button color="accent" 
+                      matTooltip="Add to Wishlist" (click)="addToWishlist(book.book_id, $event)">
+                <mat-icon>favorite_border</mat-icon>
+              </button>
+              
+              <button *ngIf="isInWishlist(book.book_id)" mat-icon-button color="accent" 
+                      matTooltip="Remove from Wishlist" (click)="removeFromWishlist(book.book_id, $event)">
+                <mat-icon>favorite</mat-icon>
+              </button>
+              
+              <button *ngIf="book.status === 'Available'" mat-icon-button color="primary" 
+                      matTooltip="Reserve Book" (click)="makeReservation(book.book_id, $event)">
+                <mat-icon>bookmark_add</mat-icon>
+              </button>
+            </ng-container>
+            
+            <ng-template #loginPrompt>
+              <button mat-icon-button color="primary" matTooltip="View Details">
+                <mat-icon>info</mat-icon>
+              </button>
+              
+              <button mat-icon-button color="primary" 
+                      matTooltip="Login to add to wishlist" 
+                      [routerLink]="['/login']" 
+                      [queryParams]="{returnUrl: '/books'}"
+                      (click)="$event.stopPropagation()">
+                <mat-icon>favorite_border</mat-icon>
+              </button>
+            </ng-template>
+          </div>
         </div>
-        <div class="col-md-12 my-2">
-            <button class="btn btn-primary w-100" (click)="searchBooks()">Search</button>
-        </div>
+      </div>
     </div>
-    @if(books){
-    @if(books.length > 0){
-    <div class="row g-1 gap-1">
-        @for (book of books; track book.book_id) {
-        <div class="col-md-3">
-            <app-book-card-search [book]="book"></app-book-card-search>
-        </div>
-        }
-    </div>
-    }
-    @else{
-    <div class="row">
-        <div class="col-md-12">
-            <h5 class="text-center">No books found</h5>
-        </div>
-    </div>
-    }
-    }
-</div>
+  </div>

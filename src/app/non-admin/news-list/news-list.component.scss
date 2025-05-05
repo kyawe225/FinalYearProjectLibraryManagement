@@ -1,0 +1,213 @@
+@use '../../../../theme-colors' as theme-colors;
+
+.news-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+
+  .page-title {
+    color: theme-colors.$primary-color;
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 500;
+  }
+
+  .filter-controls {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+}
+
+.search-box {
+  margin-bottom: 24px;
+
+  .search-input {
+    width: 100%;
+  }
+}
+
+.loading-container, .no-news {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: theme-colors.$text-medium;
+  
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+  
+  p {
+    font-size: 1.1rem;
+  }
+}
+
+.news-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.news-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  // Different border colors based on importance level
+  &.importance-strong {
+    border-left: 4px solid theme-colors.$tertiary-color;
+  }
+
+  &.importance-normal {
+    border-left: 4px solid theme-colors.$primary-color;
+  }
+
+  &.importance-low {
+    border-left: 4px solid theme-colors.$accent-color;
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .news-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+  
+  .news-details {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .news-header {
+    margin-bottom: 12px;
+  }
+  
+  .news-title {
+    font-size: 1.4rem;
+    margin: 0 0 8px 0;
+    color: theme-colors.$text-dark;
+    cursor: pointer;
+    
+    &:hover {
+      color: theme-colors.$primary-color;
+      text-decoration: underline;
+    }
+  }
+  
+  .news-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: theme-colors.$text-medium;
+    
+    .news-date {
+      display: flex;
+      align-items: center;
+    }
+    
+    .news-category {
+      background-color: theme-colors.$primary-lighter;
+      color: theme-colors.$primary-darkest;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    
+    .news-importance {
+      background-color: theme-colors.$tertiary-lighter;
+      color: theme-colors.$tertiary-color;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+  }
+  
+  .news-excerpt {
+    color: theme-colors.$text-medium;
+    margin-bottom: 16px;
+    flex-grow: 1;
+    line-height: 1.4;
+  }
+  
+  .news-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    
+    .expiry {
+      display: flex;
+      align-items: center;
+      color: theme-colors.$text-medium;
+      font-size: 0.85rem;
+      
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .page-title {
+      margin-bottom: 16px;
+    }
+    
+    .filter-controls {
+      width: 100%;
+      
+      mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+  
+  .news-list {
+    grid-template-columns: 1fr;
+  }
+}

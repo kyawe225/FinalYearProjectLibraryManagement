@@ -1,0 +1,17 @@
+
+@use '../../../../theme-colors' as theme-colors;
+
+.book-title {
+  font-weight: 500;
+  color: theme-colors.$primary-color;
+  margin-bottom: 16px;
+}
+
+.notes-field {
+  width: 100%;
+}
+
+[mat-dialog-actions] {
+  justify-content: flex-end;
+  margin-top: 16px;
+}

@@ -1,0 +1,27 @@
+<!-- src/app/admin/news/news-list/news-list.component.html -->
+<div class="news-list-container">
+    <div class="page-header">
+      <h1>News Management</h1>
+      <button mat-raised-button color="primary" (click)="onAddNews()">
+        <mat-icon>add</mat-icon>
+        Create News
+      </button>
+    </div>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [title]="'News Articles'"
+        [dataSource]="dataSource"
+        [displayedColumns]="displayedColumns"
+        [loading]="loading"
+        [actionsColumn]="true"
+        [showFilter]="true"
+        [showPaginator]="true"
+        emptyStateMessage="No news articles found"
+        (rowClick)="onRowClick($event)"
+        (editClick)="onEditNews($event)"
+        (deleteClick)="onDeleteNews($event)"
+        (refresh)="onRefresh()">
+      </app-common-material-table>
+    </div>
+  </div>

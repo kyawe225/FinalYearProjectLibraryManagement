@@ -20,6 +20,5 @@ export interface Staff {
     phone: string | null;
     date_hired: Date; // TypeScript doesn't have DateOnly, using Date instead
     username: string;
-    password_hash: string;
     status: string;
 }

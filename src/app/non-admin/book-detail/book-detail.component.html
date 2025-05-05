@@ -1,57 +1,223 @@
-<div>
-    <div class="card my-2">
-        <div class="card-body">
-            <div class="row mx-2">
-                <div class="col-md-2">
-                    <img src="https://picsum.photos/seed/picsum/200/300" class="m-auto d-block img-fluid col-7"
-                        alt="Book Cover" />
-                </div>
-                <div class="col-md-9 ms-auto">
-                    <h3>{{book?.title}}</h3>
-                    <div class="row row-cols-2 lh-lg">
-                        <div class="col-md-4">Edition : </div>
-                        <div class="">{{book?.edition }}</div>
-                        <div class="col-md-4">Author : </div>
-                        <div class="">{{book?.author_names}}</div>
-                        <div class="col-md-4">ISBN : </div>
-                        <div class="">{{book?.isbn}}</div>
-                        @if(isLoggedIn){
-                            <div class="row gap-2 col-10">
-                                <button class="btn btn-primary col-5" (click)="addToWishBook(book?.book_id !!)">WishBook</button>
-                                <button class="btn btn-primary col-5" (click)="borrowBook(book?.book_id!!)">Appointment for borrow</button>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="book-detail-container">
+    <!-- Loading indicator -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner color="primary"></mat-spinner>
+      <p>Loading book details...</p>
     </div>
-
-    <div class="card my-2">
-        <div class="card-body">
-            <h4>Details</h4>
-            <div class="row row-cols-2">
-                <div class="col-12">
-                    <div class="fs-6 fw-semibold">Description</div>
-                    <p class="fs-6">{{book?.description}}</p>
-                </div>
-                <div class="fs-6 fw-semibold">Publisher</div>
-                <p class="fs-6">{{book?.publisher?.name }}</p>
-
-                <div class="fs-6 fw-semibold">Publication Year</div>
-                <p class="fs-6">{{book?.publication_date?.getFullYear()}}</p>
-
-
-                <div class="fs-6 fw-semibold">Genre</div>
-                <p class="fs-6">{{book?.category?.name }}</p>
-
-                <div class="fs-6 fw-semibold">Edition</div>
-                <p class="fs-6">{{book?.edition ?? "MM Ed" }}</p>
-
-
-                <div class="fs-6 fw-semibold">Arrived Date</div>
-                <p class="fs-6">{{book?.added_date?.toLocaleDateString()}}</p>
-            </div>
-        </div>
+  
+    <!-- Error message -->
+    <div *ngIf="error" class="error-container">
+      <mat-icon color="warn">error</mat-icon>
+      <h2>Error Loading Book</h2>
+      <p>{{ errorMessage }}</p>
+      <button mat-raised-button color="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon> Back to Books
+      </button>
     </div>
-</div>
+  
+    <!-- Book details section -->
+    <div *ngIf="!loading && !error && book" class="book-content">
+      <!-- Back button -->
+      <div class="back-button-container">
+        <button mat-icon-button color="primary" (click)="goBack()" aria-label="Back to books">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+  
+      <!-- Book header section -->
+      <div class="book-header">
+        <div class="book-cover">
+          <!-- Placeholder if no image available -->
+          <div class="book-cover-placeholder" *ngIf="!book.cover_image_url">
+            <mat-icon>menu_book</mat-icon>
+          </div>
+          <img *ngIf="book.cover_image_url" [src]="book.cover_image_url" [alt]="book.title + ' cover'" class="book-image">
+          <div class="book-status" [ngClass]="book.status.toLowerCase()">
+            {{ book.status }}
+          </div>
+        </div>
+        
+        <div class="book-info">
+          <h1 class="book-title">{{ book.title }}</h1>
+          <h2 class="book-author">by {{ getAuthorNames() }}</h2>
+          
+          <div class="book-rating">
+            <span class="rating-stars">
+              <mat-icon *ngFor="let star of getStars(getAverageRating())" color="accent">star</mat-icon>
+              <mat-icon *ngIf="hasHalfStar(getAverageRating())" color="accent">star_half</mat-icon>
+            </span>
+            <span class="rating-value" *ngIf="reviews.length > 0">{{ getAverageRating() }} ({{ reviews.length }} reviews)</span>
+            <span class="rating-value" *ngIf="reviews.length === 0">No reviews yet</span>
+          </div>
+          
+          <div class="book-metadata">
+            <div class="metadata-item" *ngIf="book.isbn">
+              <span class="metadata-label">ISBN:</span>
+              <span class="metadata-value">{{ book.isbn }}</span>
+            </div>
+            <div class="metadata-item" *ngIf="book.publisher">
+              <span class="metadata-label">Publisher:</span>
+              <span class="metadata-value">{{ book.publisher.name }}</span>
+            </div>
+            <div class="metadata-item" *ngIf="book.publication_date">
+              <span class="metadata-label">Published:</span>
+              <span class="metadata-value">{{ book.publication_date | date:'mediumDate' }}</span>
+            </div>
+            <div class="metadata-item" *ngIf="book.category">
+              <span class="metadata-label">Category:</span>
+              <span class="metadata-value">{{ book.category.name || "" }}</span>
+            </div>
+            <div class="metadata-item">
+              <span class="metadata-label">Available Copies:</span>
+              <span class="metadata-value" [ngClass]="{'out-of-stock': book.available_copies === 0}">
+                1
+              </span>
+            </div>
+          </div>
+          
+          <!-- Action buttons -->
+          <div class="book-actions">
+            <!-- Reserve button for logged-in users -->
+            <ng-container *ngIf="isLoggedIn">
+              <button 
+                *ngIf="!userHasActiveReservation && !userHasActiveLoan && book.available_copies > 0" 
+                mat-raised-button 
+                color="primary" 
+                (click)="reserveBook()">
+                <mat-icon>bookmark</mat-icon> Reserve Book
+              </button>
+              
+              <button 
+                *ngIf="userHasActiveReservation" 
+                mat-raised-button 
+                color="warn" 
+                (click)="cancelReservation()">
+                <mat-icon>cancel</mat-icon> Cancel Reservation
+              </button>
+              
+              <div *ngIf="userHasActiveLoan" class="active-loan-info">
+                <mat-icon color="primary">info</mat-icon>
+                <span>You currently have this book on loan</span>
+              </div>
+            </ng-container>
+            
+            <!-- Reserve button for non-logged-in users -->
+            <button 
+              *ngIf="!isLoggedIn" 
+              mat-raised-button 
+              color="primary" 
+              (click)="reserveBook()">
+              <mat-icon>bookmark</mat-icon> Reserve Book
+            </button>
+            
+            <!-- Wishlist buttons for logged-in users -->
+            <button 
+              *ngIf="isLoggedIn && !userHasInWishlist" 
+              mat-stroked-button 
+              color="accent" 
+              (click)="addToWishlist()">
+              <mat-icon>favorite_border</mat-icon> Add to Wishlist
+            </button>
+            
+            <button 
+              *ngIf="isLoggedIn && userHasInWishlist" 
+              mat-stroked-button 
+              color="accent" 
+              (click)="removeFromWishlist()">
+              <mat-icon>favorite</mat-icon> In Wishlist
+            </button>
+            
+            <!-- Review button -->
+            <button 
+              mat-stroked-button 
+              color="primary" 
+              (click)="openReviewDialog()"
+              [matTooltip]="true ? 'Edit your review' : 'Write a review'">
+              <mat-icon>rate_review</mat-icon> 
+              {{ userReviewed ? 'Edit Review' : 'Write Review' }}
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Book details tabs -->
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="300ms" class="book-tabs">
+        <mat-tab label="Description">
+          <div class="tab-content description-tab">
+            <p *ngIf="!book.description">No description available for this book.</p>
+            <p *ngIf="book.description">{{ book.description }}</p>
+            
+            <div *ngIf="book.location_in_library" class="location-info">
+              <h3>Where to find this book</h3>
+              <div class="location-details">
+                <mat-icon color="primary">place</mat-icon>
+                <span>{{ book.location_in_library }}</span>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        
+        <mat-tab label="Reviews ({{ reviews.length }})">
+          <div class="tab-content reviews-tab">
+            <div class="reviews-header">
+              <h3>Reader Reviews</h3>
+              <button mat-button color="accent" (click)="openReviewDialog()">
+                <mat-icon>add</mat-icon> Add Review
+              </button>
+            </div>
+            
+            <div *ngIf="reviews.length === 0" class="no-reviews">
+              <mat-icon>rate_review</mat-icon>
+              <p>No reviews yet. Be the first to review this book!</p>
+            </div>
+            
+            <div *ngIf="reviews.length > 0" class="reviews-list">
+              <mat-card *ngFor="let review of reviews" class="review-card">
+                <mat-card-header>
+                  <div mat-card-avatar class="reviewer-avatar">
+                    <mat-icon>person</mat-icon>
+                  </div>
+                  <mat-card-title>
+                    {{ review.memberName || 'Library Member' }}
+                    <span class="review-date">{{ review.reviewDate | date:'mediumDate' }}</span>
+                  </mat-card-title>
+                  <mat-card-subtitle>
+                    <span class="review-rating">
+                      <mat-icon *ngFor="let star of getStars(review.rating)" color="accent">star</mat-icon>
+                    </span>
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p *ngIf="review.reviewText">{{ review.reviewText }}</p>
+                  <p *ngIf="!review.reviewText" class="no-text-review">No text review provided.</p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </mat-tab>
+        
+        <mat-tab label="Related Books">
+          <div class="tab-content related-books-tab">
+            <div *ngIf="!book.related_books || book.related_books.length === 0" class="no-related-books">
+              <mat-icon>library_books</mat-icon>
+              <p>No related books found.</p>
+            </div>
+            
+            <div *ngIf="book.related_books && book.related_books.length > 0" class="related-books-grid">
+              <mat-card *ngFor="let relatedBook of book.related_books" class="related-book-card" 
+                       [routerLink]="['/books', relatedBook.book_id]">
+                <img mat-card-image *ngIf="relatedBook.cover_image_url" [src]="relatedBook.cover_image_url" [alt]="relatedBook.title">
+                <div *ngIf="!relatedBook.cover_image_url" class="placeholder-cover">
+                  <mat-icon>menu_book</mat-icon>
+                </div>
+                <mat-card-content>
+                  <h3 class="related-book-title">{{ relatedBook.title }}</h3>
+                  <p class="related-book-author">{{ relatedBook.author }}</p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>

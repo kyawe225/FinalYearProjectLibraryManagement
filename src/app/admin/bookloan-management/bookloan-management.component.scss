@@ -1,0 +1,109 @@
+/* book-loan-management.component.scss */
+@use '../../../../theme-colors' as colors;
+@use 'sass:color';
+
+.book-loan-management-container {
+  padding: 20px;
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    .page-title {
+      font-size: 24px;
+      margin: 0;
+      color: colors.$text-dark;
+    }
+    
+    .add-button {
+      background-color: colors.$primary-color;
+      color: colors.$text-light;
+      
+      &:hover {
+        background-color: colors.$primary-darker;
+      }
+      
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+  
+  .quick-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    
+    .action-button {
+      display: flex;
+      align-items: center;
+      border-radius: 4px;
+      padding: 0 16px;
+      height: 36px;
+      font-weight: 500;
+      
+      mat-icon {
+        margin-right: 8px;
+      }
+      
+      &.overdue {
+        background-color: colors.$error-color;
+        color: white;
+        
+        &:hover {
+          background-color: color.adjust(colors.$error-color,$lightness: -10%);
+        }
+      }
+      
+      &.active {
+        background-color: colors.$accent-color;
+        color: colors.$text-dark;
+        
+        &:hover {
+          background-color: color.adjust(colors.$accent-color, $lightness: -10%);
+        }
+      }
+      
+      &.all {
+        background-color: colors.$primary-light;
+        color: colors.$text-light;
+        
+        &:hover {
+          background-color: colors.$primary-color;
+        }
+      }
+    }
+  }
+  
+  .return-panel {
+    background-color: colors.$primary-lighter;
+    border-radius: 4px;
+    padding: 16px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .return-info {
+      font-size: 16px;
+      color: colors.$text-dark;
+      
+      strong {
+        color: colors.$primary-darker;
+      }
+    }
+    
+    .return-actions {
+      display: flex;
+      gap: 12px;
+      
+      button {
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}

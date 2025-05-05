@@ -1,0 +1,28 @@
+<div class="admin-container">
+    <div class="admin-header">
+      <h1>Event Management</h1>
+      <button class="add-button" mat-raised-button color="primary" (click)="onAddEvent()">
+        <mat-icon>add</mat-icon> Add New Event
+      </button>
+    </div>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [displayedColumns]="displayedColumns"
+        [dataSource]="dataSource"
+        title="Library Events"
+        [showFilter]="true"
+        [showPaginator]="true"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 50, 100]"
+        [actionsColumn]="true"
+        [loading]="loading"
+        emptyStateMessage="No events found"
+        (rowClick)="onViewEvent($event)"
+        (editClick)="onEditEvent($event)"
+        (deleteClick)="onDeleteEvent($event)"
+        (viewClick)="onViewEvent($event)"
+        (refresh)="onRefresh()">
+      </app-common-material-table>
+    </div>
+  </div>

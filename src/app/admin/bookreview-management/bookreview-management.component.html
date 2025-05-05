@@ -1,0 +1,33 @@
+<!-- src/app/admin/book-reviews/book-review-management.component.html -->
+
+<div class="book-review-container">
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Book Review Management</mat-card-title>
+        <mat-card-subtitle>Manage and moderate book reviews submitted by members</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="handleAddClick()">
+          <mat-icon>add</mat-icon> Add Review
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [displayedColumns]="displayedColumns()"
+        [dataSource]="dataSource()"
+        [title]="'Book Reviews'"
+        [showFilter]="true"
+        [showPaginator]="true"
+        [pageSize]="10"
+        [loading]="loading()"
+        [actionsColumn]="true"
+        [emptyStateMessage]="'No book reviews found'"
+        (rowClick)="handleRowClick($event)"
+        (editClick)="handleEditClick($event)"
+        (deleteClick)="handleDeleteClick($event)"
+        (refresh)="handleRefresh()">
+      </app-common-material-table>
+    </div>
+  </div>

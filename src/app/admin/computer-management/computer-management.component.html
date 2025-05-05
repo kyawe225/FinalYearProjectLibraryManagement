@@ -1,0 +1,64 @@
+<!-- src/app/admin/computers/computer-management.component.html -->
+
+<div class="computer-container">
+    <mat-card class="header-card">
+      <mat-card-header>
+        <mat-card-title>Computer Management</mat-card-title>
+        <mat-card-subtitle>Manage library computers and workstations</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="handleAddClick()">
+          <mat-icon>add</mat-icon> Add Computer
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [displayedColumns]="displayedColumns()"
+        [dataSource]="dataSource()"
+        [title]="'Computers'"
+        [showFilter]="true"
+        [showPaginator]="true"
+        [pageSize]="10"
+        [loading]="loading()"
+        [actionsColumn]="true"
+        [emptyStateMessage]="'No computers found'"
+        (rowClick)="handleRowClick($event)"
+        (editClick)="handleEditClick($event)"
+        (deleteClick)="handleDeleteClick($event)"
+        (refresh)="handleRefresh()">
+        
+        <!-- Custom column templates -->
+        <ng-template #statusColumnTemplate let-element>
+          <div class="status-chip-container">
+            <span [ngClass]="['status-chip', getStatusClass(element.status)]">
+              {{ element.status }}
+            </span>
+            
+            <!-- Quick status change menu - not visible in view mode -->
+            <button mat-icon-button [matMenuTriggerFor]="statusMenu" (click)="$event.stopPropagation()">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            
+            <mat-menu #statusMenu="matMenu">
+              <button mat-menu-item *ngFor="let status of statuses()" 
+                      (click)="handleStatusChange(element, status)" 
+                      [disabled]="element.status === status">
+                {{ status }}
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item (click)="handleScheduleMaintenance(element)">
+                <mat-icon>build</mat-icon>
+                Schedule Maintenance
+              </button>
+            </mat-menu>
+          </div>
+        </ng-template>
+        
+        <ng-template #timeLimitColumnTemplate let-element>
+          {{ element.time_limit_minutes }} min
+        </ng-template>
+      </app-common-material-table>
+    </div>
+  </div>

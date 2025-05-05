@@ -1,13 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use '../theme-colors' as theme-colors;
 
-/* Importing Bootstrap SCSS file. */
-@use 'bootstrap/scss/bootstrap';
+@include mat.core();
 
-html,body{
-    margin:0;
-    padding:0;
-}
+// Define a dark theme
+// $dark-theme: mat.define-theme((
+//   color: (
+//     theme-type: dark,
+//     primary: mat.$primary-palette,
+//   ),
+// ));
 
-.main-div-color{
-    background-color: #D9D9D9;
+// Define a light theme
+$light-theme: mat.define-theme((color: (theme-type: light,
+        primary: theme-colors.$primary-palette,
+        tertiary: theme-colors.$tertiary-palette,
+      ),
+    ));
+
+html {
+  // Apply the dark theme by default
+  @include mat.all-component-themes($light-theme);
+
+  // Apply the light theme only when the user prefers light themes.
+  @media (prefers-color-scheme: light) {
+    // Use the `-color` mixins to only apply color styles without reapplying the same
+    // typography and density styles.
+    // @include mat.all-component-themes($light-theme);
+  }
 }

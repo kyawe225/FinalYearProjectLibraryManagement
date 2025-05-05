@@ -1,0 +1,33 @@
+
+<div class="publisher-management-container">
+    <div class="header-section">
+      <h1>Publisher Management</h1>
+      <p>Manage publishing companies in the library system</p>
+    </div>
+  
+    <div class="actions-section">
+      <button mat-raised-button color="primary" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon>
+        Add New Publisher
+      </button>
+    </div>
+  
+    <mat-card class="table-container">
+      <app-common-material-table
+        [title]="'Publishers'"
+        [displayedColumns]="displayedColumns"
+        [dataSource]="dataSource"
+        [loading]="loading"
+        [actionsColumn]="true"
+        [showFilter]="true"
+        [showPaginator]="true"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 50, 100]"
+        [emptyStateMessage]="'No publishers found'"
+        (rowClick)="onRowClick($event)"
+        (editClick)="onEditClick($event)"
+        (deleteClick)="onDeleteClick($event)"
+        (refresh)="onRefresh()"
+      ></app-common-material-table>
+    </mat-card>
+  </div>

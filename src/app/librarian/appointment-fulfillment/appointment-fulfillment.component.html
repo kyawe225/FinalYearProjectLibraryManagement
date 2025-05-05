@@ -1,0 +1,121 @@
+<div class="appointment-container">
+    <div class="header-card">
+      <h1>Appointment Fulfillment</h1>
+    </div>
+  
+    <div class="content-card" *ngIf="appointment && member">
+      <div class="member-info-section">
+        <div class="member-avatar">
+          <span>{{ getInitials(member.first_name, member.last_name) }}</span>
+        </div>
+        <div class="member-details">
+          <h2>{{ member.first_name }} {{ member.last_name }}</h2>
+          <p>Member ID: {{ member.id }}</p>
+          <p>Contact: {{ member.email }}</p>
+        </div>
+        <div class="appointment-details">
+          <p>Date: {{ appointment.appointment_date | date:'MMM dd, yyyy' }}</p>
+          <p>Time: {{ formatTime(appointment.start_time) }}-{{ formatTime(appointment.end_time) }}</p>
+          <p>Purpose: {{ appointment.purpose }}</p>
+        </div>
+        <div class="appointment-status">
+          <span class="status-chip" [ngClass]="appointment.status.toLowerCase()">{{ appointment.status }}</span>
+        </div>
+      </div>
+  
+      <div class="appointment-progress">
+        <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+          <div class="step-number">1</div>
+          <div class="step-label">Check-in</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" [ngClass]="{'active': currentStep >= 2, 'completed': currentStep > 2}">
+          <div class="step-number">2</div>
+          <div class="step-label">Service</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" [ngClass]="{'active': currentStep >= 3, 'completed': currentStep > 3}">
+          <div class="step-number">3</div>
+          <div class="step-label">Complete</div>
+        </div>
+      </div>
+  
+      <!-- Step 1: Member Check-in -->
+      <div class="step-content" *ngIf="currentStep === 1">
+        <h2>Member Check-in</h2>
+        <p class="instruction-text">Confirm that the member has arrived for their appointment.</p>
+  
+        <div class="check-in-form">
+          <mat-checkbox [(ngModel)]="memberCheckedIn" color="primary">
+            Yes, member has arrived and is present
+          </mat-checkbox>
+        </div>
+  
+        <div class="info-box">
+          <p>When you start the appointment, the system will:</p>
+          <ul>
+            <li>Update the appointment status to "In Progress"</li>
+            <li>Record the actual start time</li>
+          </ul>
+        </div>
+      </div>
+  
+      <!-- Step 2: Service Section Preview -->
+      <div class="step-content" *ngIf="currentStep === 1">
+        <div class="service-preview-section">
+          <h3>Next Step Preview: Service</h3>
+          
+          <mat-form-field appearance="outline" class="notes-field">
+            <mat-label>Record service notes</mat-label>
+            <textarea matInput placeholder="Document what was discussed" formControlName="notes"></textarea>
+          </mat-form-field>
+  
+          <div class="action-buttons-row">
+            <button mat-stroked-button color="primary" class="action-button">
+              Books needed?
+            </button>
+            <button mat-stroked-button color="primary" class="action-button">
+              Follow-up?
+            </button>
+          </div>
+  
+          <button mat-stroked-button color="primary" class="transaction-button" (click)="navigateToCreateBookTransaction()">
+            Create Book Transaction
+            <span class="button-subtitle">Select books and set due date</span>
+          </button>
+        </div>
+      </div>
+  
+      <div class="action-footer">
+        <button 
+          mat-stroked-button 
+          color="warn" 
+          class="no-show-button" 
+          [disabled]="loading" 
+          (click)="markMemberNoShow()">
+          Member Did Not Show
+        </button>
+        <button 
+          mat-raised-button 
+          color="primary" 
+          class="start-button" 
+          [disabled]="!memberCheckedIn || loading" 
+          (click)="startAppointment()">
+          Start Appointment
+        </button>
+      </div>
+    </div>
+  
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+      <p>Loading appointment information...</p>
+    </div>
+  
+    <!-- Error State -->
+    <div class="error-container" *ngIf="!appointment && !loading">
+      <mat-icon color="warn">error</mat-icon>
+      <p>Appointment not found or could not be loaded.</p>
+      <button mat-stroked-button (click)="router.navigate(['/appointments'])">Return to Appointments</button>
+    </div>
+  </div>

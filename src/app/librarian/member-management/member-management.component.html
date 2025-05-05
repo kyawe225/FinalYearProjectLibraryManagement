@@ -1,0 +1,63 @@
+<div class="member-management-container">
+    <div class="page-header">
+      <div class="title-section">
+        <svg class="member-icon" viewBox="0 0 240 240">
+          <!-- Background Shape -->
+          <rect x="20" y="30" width="200" height="180" rx="10" fill="#e6f6da" stroke="#006b5e" stroke-width="5"/>
+          
+          <!-- People Silhouettes -->
+          <g>
+            <!-- Person 1 -->
+            <circle cx="80" cy="80" r="25" fill="#006b5e"/>
+            <path d="M80 110 C 40 110 40 170 40 170 L 120 170 C 120 170 120 110 80 110" fill="#006b5e"/>
+            
+            <!-- Person 2 -->
+            <circle cx="140" cy="70" r="20" fill="#785900"/>
+            <path d="M140 95 C 110 95 110 155 110 155 L 170 155 C 170 155 170 95 140 95" fill="#785900"/>
+            
+            <!-- Person 3 -->
+            <circle cx="190" cy="80" r="15" fill="#9a25ae"/>
+            <path d="M190 100 C 170 100 170 140 170 140 L 210 140 C 210 140 210 100 190 100" fill="#9a25ae"/>
+          </g>
+          
+          <!-- Management Icon -->
+          <g transform="translate(160, 45) scale(0.7)">
+            <circle cx="30" cy="30" r="28" fill="white" stroke="#006b5e" stroke-width="3"/>
+            <path d="M20 30 L27 37 L40 23" stroke="#006b5e" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          
+          <!-- Library Book Stack -->
+          <g transform="translate(30, 45)">
+            <rect x="0" y="0" width="30" height="10" rx="2" fill="#ffdf9e"/>
+            <rect x="5" y="-12" width="30" height="12" rx="2" fill="#ffd6fe"/>
+            <rect x="-5" y="10" width="30" height="8" rx="2" fill="#97f3e2"/>
+          </g>
+        </svg>
+        <h1>Member Management</h1>
+      </div>
+      <button class="create-button" (click)="onCreateMember()">
+        <mat-icon>person_add</mat-icon>
+        Add New Member
+      </button>
+    </div>
+  
+    <div class="table-container">
+      <app-common-material-table
+        [displayedColumns]="displayedColumns"
+        [dataSource]="dataSource"
+        [title]="'Library Members'"
+        [showFilter]="true"
+        [showPaginator]="true"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 50]"
+        [selectable]="false"
+        [actionsColumn]="true"
+        [loading]="loading"
+        [emptyStateMessage]="'No members found'"
+        (rowClick)="onRowClick($event)"
+        (editClick)="onEditClick($event)"
+        (deleteClick)="onDeleteClick($event)"
+        (refresh)="onRefresh()"
+      ></app-common-material-table>
+    </div>
+  </div>

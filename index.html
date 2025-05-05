@@ -1,0 +1,235 @@
+<div class="library-action-container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <h1 class="page-title">{{ isCheckout ? 'Book Checkout' : 'Book Return' }}</h1>
+      <div class="action-toggle">
+        <button mat-button 
+                [ngClass]="{'active-action': isCheckout}"
+                (click)="setActionMode(true)">
+          <mat-icon>assignment_turned_in</mat-icon>
+          Checkout
+        </button>
+        <button mat-button 
+                [ngClass]="{'active-action': !isCheckout}"
+                (click)="setActionMode(false)">
+          <mat-icon>assignment_return</mat-icon>
+          Return
+        </button>
+      </div>
+    </div>
+  
+    <!-- Scanner Section -->
+    <div class="scanner-section">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ isCheckout ? 'Checkout Items' : 'Return Items' }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="scan-inputs">
+            <!-- Member ID Input -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Member ID</mat-label>
+              <input 
+                matInput 
+                [(ngModel)]="memberId" 
+                placeholder="Scan or enter member ID"
+                (keyup.enter)="lookupMember()">
+              <button mat-icon-button matSuffix (click)="lookupMember()">
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
+  
+            <!-- Book ISBN Input (only shown for checkout) -->
+            <mat-form-field *ngIf="isCheckout" appearance="outline" class="full-width">
+              <mat-label>Book ISBN</mat-label>
+              <input 
+                matInput 
+                [(ngModel)]="bookIsbn" 
+                placeholder="Scan or enter book ISBN"
+                [disabled]="!memberDetails"
+                (keyup.enter)="addBookToCheckout()">
+              <button mat-icon-button matSuffix (click)="addBookToCheckout()" [disabled]="!memberDetails">
+                <mat-icon>add</mat-icon>
+              </button>
+            </mat-form-field>
+  
+            <!-- Book Loan ID Input (only shown for returns) -->
+            <mat-form-field *ngIf="!isCheckout" appearance="outline" class="full-width">
+              <mat-label>Book / Loan ID</mat-label>
+              <input 
+                matInput 
+                [(ngModel)]="loanId" 
+                placeholder="Scan or enter book/loan ID"
+                [disabled]="!memberDetails"
+                (keyup.enter)="addBookToReturn()">
+              <button mat-icon-button matSuffix (click)="addBookToReturn()" [disabled]="!memberDetails">
+                <mat-icon>add</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+  
+          <!-- Member Information Card (if member is found) -->
+          <div *ngIf="memberDetails" class="member-info-card">
+            <div class="member-header">
+              <div class="member-avatar">
+                <mat-icon class="avatar-icon">person</mat-icon>
+              </div>
+              <div class="member-details">
+                <h3>{{ memberDetails.first_name }} {{ memberDetails.last_name }}</h3>
+                <p>Member ID: {{ memberDetails.id }}</p>
+                <p>Status: <span [ngClass]="{'status-active': memberDetails.membership_status === 'Active', 
+                                            'status-inactive': memberDetails.membership_status !== 'Active'}">
+                  {{ memberDetails.membership_status }}
+                </span></p>
+              </div>
+            </div>
+  
+            <!-- Member Alerts (if any) -->
+            <div *ngIf="hasOverdueItems || hasFines" class="member-alerts">
+              <mat-icon *ngIf="hasOverdueItems" class="alert-icon">warning</mat-icon>
+              <span *ngIf="hasOverdueItems" class="alert-text">Member has overdue items</span>
+              
+              <mat-icon *ngIf="hasFines" class="alert-icon">paid</mat-icon>
+              <span *ngIf="hasFines" class="alert-text">Outstanding fines: ${{ totalFines.toFixed(2) }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <!-- Transaction Items Section -->
+    <div class="transaction-items-section" *ngIf="memberDetails">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ isCheckout ? 'Items to Checkout' : 'Items to Return' }}</mat-card-title>
+          <span class="item-count">{{ transactionItems.length }} items</span>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- Empty state -->
+          <div *ngIf="transactionItems.length === 0" class="empty-state">
+            <mat-icon class="empty-icon">
+              {{ isCheckout ? 'shopping_cart' : 'assignment_return' }}
+            </mat-icon>
+            <p>No items added to {{ isCheckout ? 'checkout' : 'return' }} yet</p>
+          </div>
+  
+          <!-- Items list -->
+          <div *ngIf="transactionItems.length > 0" class="items-list">
+            <div *ngFor="let item of transactionItems; let i = index" class="transaction-item">
+              <div class="item-details">
+                <div class="item-image-placeholder">
+                  <mat-icon>book</mat-icon>
+                </div>
+                <div class="item-info">
+                  <h4>{{ item.title }}</h4>
+                  <p>ISBN: {{ item.isbn }}</p>
+                  <p *ngIf="!isCheckout && item.due_date">
+                    Due date: {{ item.due_date | date:'mediumDate' }}
+                    <span *ngIf="item.is_overdue" class="overdue-label">OVERDUE</span>
+                  </p>
+                  <p *ngIf="isCheckout">Copy ID: {{ item.copy_id }}</p>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button mat-icon-button color="warn" (click)="removeItem(i)" matTooltip="Remove item">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Due date selector (for checkout only) -->
+          <div *ngIf="isCheckout && transactionItems.length > 0" class="due-date-selector">
+            <mat-form-field appearance="outline">
+              <mat-label>Due Date</mat-label>
+              <input matInput [matDatepicker]="dueDatePicker" [(ngModel)]="dueDate">
+              <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #dueDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+  
+          <!-- Fine calculation (for returns only) -->
+          <div *ngIf="!isCheckout && transactionItems.length > 0 && calculatedFines > 0" class="fine-details">
+            <h3>Fine Summary</h3>
+            <div *ngFor="let item of transactionItems" class="fine-item">
+              <span *ngIf="item.fine_amount > 0">
+                {{ item.title }} - ${{ item.fine_amount.toFixed(2) }}
+                <span *ngIf="item.days_overdue">({{ item.days_overdue }} days overdue)</span>
+              </span>
+            </div>
+            <div class="total-fine">
+              <strong>Total Fine: ${{ calculatedFines.toFixed(2) }}</strong>
+            </div>
+          </div>
+        </mat-card-content>
+  
+        <!-- Action buttons -->
+        <mat-card-actions align="end" *ngIf="transactionItems.length > 0">
+          <button mat-button color="warn" (click)="clearTransaction()">
+            CANCEL
+          </button>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="completeTransaction()"
+            [disabled]="transactionItems.length === 0">
+            {{ isCheckout ? 'COMPLETE CHECKOUT' : 'COMPLETE RETURN' }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  
+    <!-- Transaction Receipt (shown after successful transaction) -->
+    <div *ngIf="showReceipt" class="transaction-receipt">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Transaction Complete</mat-card-title>
+          <mat-card-subtitle>
+            {{ isCheckout ? 'Checkout' : 'Return' }} ID: {{ transactionId }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="receipt-header">
+            <div class="receipt-logo">
+              <mat-icon>local_library</mat-icon>
+            </div>
+            <div class="receipt-timestamp">
+              <h3>University Library</h3>
+              <p>{{ transactionDate | date:'medium' }}</p>
+            </div>
+          </div>
+  
+          <div class="receipt-member">
+            <h4>Member:</h4>
+            <p>{{ memberDetails.first_name }} {{ memberDetails.last_name }}</p>
+            <p>ID: {{ memberDetails.id }}</p>
+          </div>
+  
+          <div class="receipt-items">
+            <h4>{{ isCheckout ? 'Checked Out Items' : 'Returned Items' }}:</h4>
+            <div *ngFor="let item of completedItems" class="receipt-item">
+              <p>{{ item.title }}</p>
+              <p *ngIf="isCheckout">Due: {{ item.due_date | date:'mediumDate' }}</p>
+            </div>
+          </div>
+  
+          <div *ngIf="!isCheckout && calculatedFines > 0" class="receipt-fines">
+            <h4>Fines:</h4>
+            <p>Total Fines: ${{ calculatedFines.toFixed(2) }}</p>
+            <p>Payment Status: {{ finesPaid ? 'Paid' : 'Pending' }}</p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button (click)="printReceipt()">
+            <mat-icon>print</mat-icon> PRINT
+          </button>
+          <button mat-button (click)="emailReceipt()">
+            <mat-icon>email</mat-icon> EMAIL
+          </button>
+          <button mat-raised-button color="primary" (click)="resetForm()">
+            NEW TRANSACTION
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>

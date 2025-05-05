@@ -1,0 +1,48 @@
+@use '../../../../theme-colors.scss' as theme-colors;
+
+.fulfillment-dialog {
+  min-width: 400px;
+  
+  h2 {
+    color: theme-colors.$primary-color;
+    margin-top: 0;
+  }
+  
+  .appointment-info {
+    background-color: theme-colors.$primary-lighter;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    
+    .detail-row {
+      display: flex;
+      margin-bottom: 8px;
+      font-size: 14px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      .label {
+        font-weight: 500;
+        color: theme-colors.$primary-darker;
+        width: 120px;
+        flex-shrink: 0;
+      }
+      
+      .value {
+        color: theme-colors.$text-dark;
+      }
+    }
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  mat-dialog-actions {
+    margin-top: 16px;
+    padding-bottom: 8px;
+  }
+}

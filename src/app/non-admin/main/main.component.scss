@@ -1,0 +1,373 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use '../../../../theme-colors' as theme-colors;
+
+// Define variables using the theme palette
+$primary-color: map.get(theme-colors.$primary-palette, 40);
+$primary-light: map.get(theme-colors.$primary-palette, 60);
+$primary-lighter: map.get(theme-colors.$primary-palette, 90);
+$primary-darker: map.get(theme-colors.$primary-palette, 30);
+$primary-darkest: map.get(theme-colors.$primary-palette, 20);
+
+
+$error-color: theme-colors.$error-color;
+$error-lighter: theme-colors.$error-lighter;
+
+$background-color: map.get(theme-colors.$primary-palette, 99);
+$card-background: white;
+$text-dark: map.get(theme-colors.$primary-palette, 10);
+$text-medium: map.get(theme-colors.$primary-palette, 40);
+$text-light: map.get(theme-colors.$primary-palette, 95);
+
+// Info, warning, success colors
+$info-color: #2196F3;
+$warning-color: theme-colors.$warning-color;
+$success-color: #4CAF50;
+
+.welcome-banner {
+  background: linear-gradient(135deg, $primary-darker 0%, $primary-color 100%);
+  color: $text-light;
+  padding: 24px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  
+  .welcome-content {
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 300;
+    }
+    
+    p {
+      margin: 4px 0 0;
+      opacity: 0.9;
+    }
+  }
+}
+
+.dashboard-container {
+  .dashboard-section {
+    background-color: $card-background;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 24px;
+    
+    h2 {
+      margin-top: 0;
+      color: $text-dark;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      
+      h2 {
+        margin: 0;
+      }
+    }
+  }
+  
+  .stats-section {
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      
+      .stats-card {
+        position: relative;
+        overflow: hidden;
+        
+        .stat-value {
+          font-size: 2.5rem;
+          font-weight: 300;
+          color: $primary-color;
+        }
+        
+        .stat-label {
+          color: $text-medium;
+          font-size: 1rem;
+        }
+        
+        .stat-icon {
+          position: absolute;
+          right: 16px;
+          top: 16px;
+          font-size: 40px;
+          opacity: 0.2;
+          color: $primary-color;
+        }
+        
+        &.warning-card {
+          .stat-value {
+            color: $error-color;
+          }
+          
+          .stat-icon {
+            color: $error-color;
+          }
+        }
+        
+        mat-card-actions {
+          padding: 8px;
+        }
+      }
+    }
+  }
+  
+  .dashboard-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    
+    .dashboard-column {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  
+  .featured-books-section {
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+      
+      .book-card {
+        .book-cover {
+          height: 200px;
+          object-fit: cover;
+          border-radius: 4px 4px 0 0;
+        }
+        
+        .book-title {
+          font-size: 1rem;
+          font-weight: 500;
+          margin: 0 0 8px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: $text-dark;
+        }
+        
+        .book-author {
+          font-size: 0.85rem;
+          color: $text-medium;
+          margin: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        
+        mat-card-actions {
+          padding: 8px;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+  
+  .notifications-section {
+    .badge {
+      background-color: $error-color;
+      color: white;
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 8px;
+      display: inline-block;
+    }
+    
+    .notification-list {
+      .notification-card {
+        margin-bottom: 12px;
+        border-left: 4px solid transparent;
+        
+        &.unread {
+          background-color: rgba($primary-color, 0.05);
+        }
+        
+        &.info-notification {
+          border-left-color: $info-color;
+          
+          .notification-header mat-icon {
+            color: $info-color;
+          }
+        }
+        
+        &.warning-notification {
+          border-left-color: $warning-color;
+          
+          .notification-header mat-icon {
+            color: $warning-color;
+          }
+        }
+        
+        &.success-notification {
+          border-left-color: $success-color;
+          
+          .notification-header mat-icon {
+            color: $success-color;
+          }
+        }
+        
+        .notification-header {
+          display: flex;
+          align-items: center;
+          margin-bottom: 8px;
+          
+          mat-icon {
+            margin-right: 8px;
+          }
+          
+          small {
+            margin-left: auto;
+            color: $text-medium;
+          }
+        }
+        
+        p {
+          margin: 0;
+          color: $text-dark;
+        }
+        
+        mat-card-actions {
+          padding: 8px;
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+  
+  .events-section {
+    .event-card {
+      margin-bottom: 12px;
+      
+      .event-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $primary-color;
+        color: white;
+      }
+      
+      mat-card-title {
+        color: $text-dark;
+      }
+      
+      mat-card-subtitle {
+        color: $primary-light;
+      }
+      
+      mat-card-content {
+        color: $text-medium;
+      }
+      
+      mat-card-actions {
+        padding: 8px;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+  
+  .news-section {
+    .news-card {
+      margin-bottom: 12px;
+      
+      mat-card-title {
+        color: $text-dark;
+      }
+      
+      mat-card-subtitle {
+        color: $primary-light;
+      }
+      
+      mat-card-content {
+        margin-top: 8px;
+        color: $text-medium;
+      }
+      
+      mat-card-actions {
+        padding: 8px;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+  
+  .quick-actions-section {
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+  
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    color: $text-medium;
+    
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 16px;
+    }
+    
+    p {
+      font-size: 1.1rem;
+      margin: 0;
+    }
+  }
+}
+
+// Media queries for dashboard layout
+@media (max-width: 959px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .stats-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 599px) {
+  .stats-cards {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .welcome-banner {
+    .welcome-content {
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  
+  .books-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}

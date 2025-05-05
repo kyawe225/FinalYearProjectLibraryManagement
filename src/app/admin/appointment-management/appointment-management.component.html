@@ -1,0 +1,26 @@
+<!-- appointment-management.component.html -->
+<div class="appointment-management-container">
+    <div class="header-container">
+      <h1 class="page-title">Appointment Management</h1>
+      <button class="add-button" mat-raised-button color="primary" (click)="onAddClick()">
+        <mat-icon>add</mat-icon> Add Appointment
+      </button>
+    </div>
+  
+    <app-common-material-table
+      [title]="'Appointments'"
+      [displayedColumns]="displayedColumns"
+      [dataSource]="dataSource"
+      [loading]="isLoading"
+      [showFilter]="true"
+      [showPaginator]="true"
+      [pageSize]="10"
+      [actionsColumn]="true"
+      [emptyStateMessage]="'No appointments found'"
+      (rowClick)="onViewClick($event)"
+      (editClick)="onEditClick($event)"
+      (deleteClick)="onDeleteClick($event)"
+      (viewClick)="onViewClick($event)"
+      (refresh)="onRefresh()">
+    </app-common-material-table>
+  </div>

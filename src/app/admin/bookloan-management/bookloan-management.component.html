@@ -1,0 +1,26 @@
+<!-- book-loan-management.component.html -->
+<div class="book-loan-management-container">
+    <div class="header-container">
+      <h1 class="page-title">Book Loan Management</h1>
+      <button class="add-button" mat-raised-button color="primary" (click)="onAddClick()">
+        <mat-icon>add</mat-icon> Add Loan
+      </button>
+    </div>
+  
+    <app-common-material-table
+      [title]="'Book Loans'"
+      [displayedColumns]="displayedColumns"
+      [dataSource]="dataSource"
+      [loading]="isLoading"
+      [showFilter]="true"
+      [showPaginator]="true"
+      [pageSize]="10"
+      [actionsColumn]="true"
+      [emptyStateMessage]="'No book loans found'"
+      (rowClick)="onViewClick($event)"
+      (editClick)="onEditClick($event)"
+      (deleteClick)="onDeleteClick($event)"
+      (viewClick)="onViewClick($event)"
+      (refresh)="onRefresh()">
+    </app-common-material-table>
+  </div>

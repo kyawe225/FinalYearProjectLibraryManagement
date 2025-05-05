@@ -1,7 +1,7 @@
 ﻿export interface book_category{
   id : string;
   name: string;
-  parent_category : book_category;
+  parent_category ?: book_category;
   description: string;
 }
 

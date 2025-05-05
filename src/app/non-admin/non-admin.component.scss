@@ -1,0 +1,125 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use '../../../theme-colors' as theme-colors;
+
+// Define variables using the theme palette
+$primary-color: map.get(theme-colors.$primary-palette, 40);
+$primary-lighter: map.get(theme-colors.$primary-palette, 90);
+$primary-darker: map.get(theme-colors.$primary-palette, 70);
+$background-light: map.get(theme-colors.$primary-palette, 95);
+$text-dark: map.get(theme-colors.$primary-palette, 10);
+$text-medium: map.get(theme-colors.$primary-palette, 30);
+
+.toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  margin-left: 8px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.user-menu-button {
+  display: flex;
+  align-items: center;
+  
+  mat-icon {
+    margin-right: 4px;
+  }
+}
+
+.sidenav-container {
+  position: absolute;
+  top: 64px; // Height of the toolbar
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav {
+  width: 250px;
+  background-color: white;
+  
+  mat-nav-list {
+    a {
+      display: flex;
+      align-items: center;
+      height: 48px;
+      color: $text-dark;
+      
+      mat-icon {
+        margin-right: 16px;
+        color: $text-medium;
+      }
+      
+      &.active {
+        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+        
+        mat-icon {
+          color: $primary-color;
+        }
+      }
+
+      &:hover {
+        background-color: rgba($primary-color, 0.05);
+      }
+    }
+  }
+}
+
+.main-content {
+  padding: 20px;
+  min-height: calc(100vh - 64px - 60px); // viewport height - toolbar height - footer height
+  background-color: $background-light;
+}
+
+.footer {
+  background-color: white;
+  border-top: 1px solid $primary-lighter;
+  padding: 16px;
+  height: 60px;
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: $text-medium;
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .sidenav-container {
+    top: 56px; // Height of the toolbar on mobile
+  }
+  
+  .main-content {
+    min-height: calc(100vh - 56px - 60px);
+  }
+  
+  .logo {
+    font-size: 1.2rem;
+  }
+  
+  .user-menu-button {
+    span {
+      display: none;
+    }
+  }
+}

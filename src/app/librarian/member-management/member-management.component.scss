@@ -1,0 +1,167 @@
+@use '../../../../theme-colors' as theme-colors;
+
+.member-management-container {
+  padding: 24px;
+  background-color: theme-colors.$background-color;
+  min-height: calc(100vh - 64px);
+  
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    
+    .title-section {
+      display: flex;
+      align-items: center;
+      
+      .member-icon {
+        width: 48px;
+        height: 48px;
+        margin-right: 16px;
+      }
+      
+      h1 {
+        color: theme-colors.$text-dark;
+        font-size: 24px;
+        margin: 0;
+        font-weight: 500;
+      }
+    }
+    
+    .create-button {
+      background-color: theme-colors.$primary-color;
+      color: theme-colors.$text-light;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+      
+      &:hover {
+        background-color: theme-colors.$primary-darker;
+      }
+      
+      mat-icon {
+        font-size: 20px;
+        height: 20px;
+        width: 20px;
+      }
+    }
+  }
+  
+  .table-container {
+    background-color: theme-colors.$card-background;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    
+    ::ng-deep {
+      .mat-mdc-header-row {
+        background-color: theme-colors.$primary-lighter;
+      }
+      
+      .mat-mdc-header-cell {
+        color: theme-colors.$primary-darkest;
+        font-weight: 600;
+      }
+      
+      .mat-mdc-row {
+        &:hover {
+          background-color: rgba(theme-colors.$primary-lighter, 0.2);
+          cursor: pointer;
+        }
+      }
+      
+      .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-block;
+        text-align: center;
+        
+        &.active {
+          background-color: rgba(theme-colors.$primary-color, 0.2);
+          color: theme-colors.$primary-darker;
+        }
+        
+        &.pending {
+          background-color: rgba(theme-colors.$accent-color, 0.2);
+          color: theme-colors.$accent-darker;
+        }
+        
+        &.suspended {
+          background-color: rgba(theme-colors.$tertiary-color, 0.2);
+          color: theme-colors.$tertiary-color;
+        }
+        
+        &.expired {
+          background-color: rgba(theme-colors.$error-color, 0.2);
+          color: theme-colors.$error-color;
+        }
+        
+        &.closed {
+          background-color: rgba(theme-colors.$text-dark, 0.2);
+          color: theme-colors.$text-dark;
+        }
+      }
+      
+      .action-cell {
+        display: flex;
+        gap: 8px;
+        
+        button {
+          min-width: 36px;
+          padding: 0;
+          width: 36px;
+          height: 36px;
+          
+          &.edit-button {
+            color: theme-colors.$primary-color;
+          }
+          
+          &.view-button {
+            color: theme-colors.$accent-color;
+          }
+          
+          &.delete-button {
+            color: theme-colors.$error-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Media queries for responsiveness
+@media (max-width: 768px) {
+  .member-management-container {
+    padding: 16px;
+    
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      
+      .create-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .table-container {
+    ::ng-deep {
+      .mat-mdc-cell {
+        font-size: 13px;
+      }
+    }
+  }
+}

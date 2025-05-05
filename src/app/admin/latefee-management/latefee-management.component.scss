@@ -1,0 +1,171 @@
+/* src/app/admin/fines/fine-management.component.scss */
+
+@use 'sass:map';
+@use '../../../../theme-colors' as colors;
+
+.fine-container {
+  padding: 20px;
+  
+  .fine-stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    
+    .stats-card {
+      flex: 1;
+      min-width: 200px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      background-color: colors.$card-background;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      
+      .stats-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        margin-right: 16px;
+        
+        mat-icon {
+          font-size: 24px;
+          height: 24px;
+          width: 24px;
+          color: white;
+        }
+        
+        &.unpaid {
+          background-color: colors.$error-color;
+        }
+        
+        &.paid {
+          background-color: colors.$primary-color;
+        }
+        
+        &.waived {
+          background-color: colors.$tertiary-color;
+        }
+      }
+      
+      .stats-content {
+        .stats-label {
+          font-size: 0.875rem;
+          color: colors.$text-medium;
+          margin-bottom: 4px;
+        }
+        
+        .stats-value {
+          font-size: 1.5rem;
+          font-weight: 500;
+          color: colors.$text-dark;
+        }
+      }
+    }
+  }
+  
+  .header-card {
+    margin-bottom: 20px;
+    background-color: colors.$card-background;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    mat-card-title {
+      color: colors.$primary-color;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+    
+    mat-card-subtitle {
+      color: colors.$text-medium;
+      margin-top: 4px;
+    }
+    
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+      
+      .filter-field {
+        flex: 1;
+        min-width: 200px;
+      }
+    }
+    
+    mat-card-actions {
+      padding: 0 16px 16px;
+    }
+  }
+  
+  .table-container {
+    background-color: colors.$card-background;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .status-chip-container {
+    display: flex;
+    align-items: center;
+    
+    .status-chip {
+      padding: 4px 8px;
+      border-radius: 16px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      
+      &.status-unpaid {
+        background-color: rgba(map.get(colors.$palettes, error, 40), 0.12);
+        color: colors.$error-color;
+      }
+      
+      &.status-paid {
+        background-color: rgba(map.get(colors.$palettes, primary, 40), 0.12);
+        color: colors.$primary-color;
+      }
+      
+      &.status-waived {
+        background-color: rgba(map.get(colors.$palettes, tertiary, 40), 0.12);
+        color: colors.$tertiary-color;
+      }
+    }
+    
+    button {
+      margin-left: 4px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      
+      mat-icon {
+        font-size: 16px;
+        height: 16px;
+        width: 16px;
+        line-height: 16px;
+      }
+    }
+  }
+  
+  ::ng-deep {
+    .mat-column-fineamount,
+    .mat-column-finedate,
+    .mat-column-daysoverdue {
+      max-width: 120px;
+    }
+    
+    .mat-column-paymentstatus {
+      min-width: 140px;
+    }
+    
+    .mat-column-membername,
+    .mat-column-booktitle {
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

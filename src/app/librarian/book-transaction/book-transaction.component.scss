@@ -1,0 +1,409 @@
+@use '../../../../theme-colors' as theme-colors;
+
+// Main container
+.library-action-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  
+  .action-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .page-title {
+      color: theme-colors.$primary-color;
+      font-size: 24px;
+      margin: 0;
+    }
+    
+    .mode-toggle {
+      min-width: 300px;
+      
+      ::ng-deep .mat-mdc-tab-group {
+        .mat-mdc-tab .mdc-tab__text-label {
+          color: theme-colors.$text-medium;
+        }
+        
+        .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+          color: theme-colors.$primary-color;
+        }
+        
+        .mat-mdc-tab-header-pagination-chevron {
+          border-color: theme-colors.$primary-color;
+        }
+        
+        .mat-mdc-tab-labels {
+          background-color: theme-colors.$primary-lighter;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+  
+  // Cards styling
+  .scan-card, .items-card, .receipt-card {
+    background-color: theme-colors.$card-background;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    
+    mat-card-header {
+      padding: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      
+      mat-card-title {
+        color: theme-colors.$primary-color;
+        font-size: 18px;
+        margin: 0;
+      }
+    }
+    
+    mat-card-content {
+      padding: 16px;
+    }
+    
+    mat-card-actions {
+      padding: 8px 16px 16px;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+  }
+  
+  // Scan section styling
+  .scan-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    .scan-input-group {
+      width: 100%;
+      
+      .full-width {
+        width: 100%;
+      }
+    }
+    
+    .member-details {
+      display: flex;
+      background-color: theme-colors.$primary-lighter;
+      border-radius: 8px;
+      padding: 16px;
+      gap: 16px;
+      
+      .member-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: theme-colors.$primary-color;
+        color: white;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        
+        .avatar-icon {
+          font-size: 40px;
+          width: 40px;
+          height: 40px;
+        }
+      }
+      
+      .member-info {
+        flex: 1;
+        
+        h3 {
+          margin: 0 0 4px 0;
+          color: theme-colors.$primary-darkest;
+          font-size: 18px;
+        }
+        
+        p {
+          margin: 2px 0;
+          color: theme-colors.$text-medium;
+          
+          &.id-text {
+            font-family: monospace;
+            font-size: 14px;
+          }
+        }
+        
+        .status {
+          font-weight: 500;
+          
+          .status-active {
+            color: #4caf50;
+          }
+          
+          .status-inactive {
+            color: theme-colors.$error-color;
+          }
+        }
+        
+        .member-alerts {
+          margin-top: 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          
+          .alert {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            
+            mat-icon {
+              font-size: 18px;
+              height: 18px;
+              width: 18px;
+            }
+            
+            &.overdue-alert {
+              background-color: #fff3e0;
+              color: #e65100;
+            }
+            
+            &.fine-alert {
+              background-color: theme-colors.$error-lighter;
+              color: theme-colors.$error-color;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Items list section
+  .items-card {
+    mat-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      .header-with-count {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        
+        .item-count {
+          background-color: theme-colors.$primary-lighter;
+          color: theme-colors.$primary-darkest;
+          padding: 2px 8px;
+          border-radius: 12px;
+          font-size: 14px;
+        }
+      }
+      
+      .due-date-selector {
+        mat-form-field {
+          width: 180px;
+        }
+      }
+    }
+    
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 0;
+      color: theme-colors.$text-medium;
+      
+      mat-icon {
+        font-size: 48px;
+        height: 48px;
+        width: 48px;
+        margin-bottom: 16px;
+        opacity: 0.7;
+      }
+      
+      p {
+        font-size: 16px;
+      }
+    }
+    
+    .transaction-items {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      
+      .transaction-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #fafafa;
+        
+        .item-content {
+          display: flex;
+          padding: 12px;
+          gap: 16px;
+          
+          .item-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: theme-colors.$primary-light;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 4px;
+            
+            mat-icon {
+              font-size: 32px;
+              width: 32px;
+              height: 32px;
+            }
+          }
+          
+          .item-details {
+            flex: 1;
+            
+            h3 {
+              margin: 0 0 4px 0;
+              color: theme-colors.$primary-darkest;
+              font-size: 16px;
+            }
+            
+            p {
+              margin: 2px 0;
+              color: theme-colors.$text-medium;
+              font-size: 14px;
+            }
+            
+            .return-details {
+              margin-top: 8px;
+              
+              .overdue-text {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                color: theme-colors.$error-color;
+                
+                .overdue-icon {
+                  font-size: 16px;
+                  height: 16px;
+                  width: 16px;
+                }
+              }
+            }
+          }
+          
+          .item-actions {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+    
+    .fine-summary {
+      margin-top: 20px;
+      background-color: #fafafa;
+      border-radius: 8px;
+      padding: 16px;
+      border-left: 4px solid theme-colors.$error-color;
+      
+      h3 {
+        margin: 0 0 8px 0;
+        color: theme-colors.$error-color;
+      }
+      
+      .total-fine {
+        font-weight: 500;
+        font-size: 16px;
+      }
+    }
+  }
+  
+  // Receipt styling
+  .receipt-container {
+    max-width: 800px;
+    margin: 0 auto;
+    
+    .receipt-card {
+      background-color: theme-colors.$card-background;
+      
+      .receipt-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+        
+        .receipt-icon {
+          background-color: theme-colors.$primary-color;
+          color: white;
+          padding: 12px;
+          border-radius: 50%;
+          font-size: 24px;
+          height: 24px;
+          width: 24px;
+        }
+        
+        .receipt-title {
+          flex: 1;
+          
+          mat-card-title {
+            margin-bottom: 4px;
+          }
+          
+          .receipt-date {
+            margin-top: 4px;
+            color: theme-colors.$text-medium;
+            font-size: 14px;
+          }
+        }
+      }
+      
+      .receipt-section {
+        margin-bottom: 24px;
+        
+        h3 {
+          color: theme-colors.$primary-color;
+          border-bottom: 1px solid theme-colors.$primary-lighter;
+          padding-bottom: 8px;
+          margin-bottom: 12px;
+        }
+        
+        p {
+          margin: 4px 0;
+        }
+      }
+      
+      .receipt-items-table {
+        width: 100%;
+        border-collapse: collapse;
+        
+        th, td {
+          padding: 8px 12px;
+          text-align: left;
+          border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+          background-color: theme-colors.$primary-lighter;
+          color: theme-colors.$primary-darkest;
+          font-weight: 500;
+        }
+        
+        tr:last-child td {
+          border-bottom: none;
+        }
+        
+        .overdue-text {
+          color: theme-colors.$error-color;
+          font-weight: 500;
+        }
+      }
+      
+      .fines-section {
+        background-color: #fdf6f6;
+        border-radius: 8px;
+        padding: 16px;
+        border-left: 4px solid theme-colors.$error-color;
+      }
+    }
+  }
+}

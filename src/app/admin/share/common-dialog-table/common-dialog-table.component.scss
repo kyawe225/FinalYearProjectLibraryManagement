@@ -1,0 +1,85 @@
+/* shared/components/crud-dialog/crud-dialog.component.scss */
+@use '../../../../../theme-colors' as theme_colors;
+@use 'sass:color';
+
+.dialog-container {
+  padding: 0;
+  min-width: 350px;
+  max-width: 600px;
+  width: 100%;
+
+  h2 {
+    color: theme_colors.$primary-color;
+    margin: 0 0 16px 0;
+    font-weight: 500;
+  }
+
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 0;
+  }
+
+  .delete-container {
+    padding: 0 0 16px 0;
+
+    .delete-message {
+      color: theme_colors.$text-dark;
+      margin-bottom: 24px;
+    }
+  }
+  
+  .checkbox-container {
+    margin: 8px 0 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  ::ng-deep {
+    .mat-checkbox-label {
+      color: theme_colors.$text-dark;
+    }
+    
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      color: rgba(theme_colors.$primary-color, 0.3);
+    }
+    
+    .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+      color: theme_colors.$primary-color;
+    }
+    
+    .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+      color: theme_colors.$error-color;
+      opacity: 0.8;
+    }
+    
+    .mat-input-element:disabled,
+    .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+      color: rgba(theme_colors.$text-dark, 0.5);
+    }
+    
+    .mat-select-disabled .mat-select-value {
+      color: rgba(theme_colors.$text-dark, 0.5);
+    }
+    
+    .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+      background-color: theme_colors.$primary-color;
+    }
+    
+    .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+      background-color: rgba(theme_colors.$primary-color, 0.2);
+    }
+  }
+}

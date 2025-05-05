@@ -1,0 +1,18 @@
+<div class="notification-container">
+    <div class="notification-icon">
+      <mat-icon>book</mat-icon>
+    </div>
+    <div class="notification-content">
+      <div class="notification-title">Book Pickup Scheduled</div>
+      <div class="notification-details">
+        <div class="book-title">{{data.bookTitle}}</div>
+        <div class="pickup-info">
+          <span class="member-name">{{data.memberName}}</span>
+          <span class="pickup-time">{{data.pickupTime}} • {{data.date | date:'shortDate'}}</span>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dismiss()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
